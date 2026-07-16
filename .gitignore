@@ -1,0 +1,16 @@
+# --- Secrets: NEVER commit ---
+.env
+*.env
+
+# --- OS / editor junk ---
+.DS_Store
+Thumbs.db
+*.swp
+
+# --- Python ---
+__pycache__/
+*.pyc
+_peek.py
+
+# --- Node (in case anything gets added later) ---
+node_modules/

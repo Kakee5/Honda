@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freed Spike 交流區 · DIY 教學 &amp; 推薦地點</title>
+<style>
+  :root{
+    --red:#d5182f; --red-dark:#a5101f; --ink:#181a1f; --ink-soft:#5b6270;
+    --line:#e7e9ee; --bg:#f4f5f7; --card:#ffffff; --chip:#eef0f4;
+    --radius:16px; --shadow:0 1px 3px rgba(20,22,30,.06),0 8px 24px rgba(20,22,30,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"PingFang HK","Noto Sans HK","Microsoft JhengHei",system-ui,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  /* Header */
+  header{background:linear-gradient(135deg,#1c1e24,#2b2e37);color:#fff;padding:26px 20px 18px}
+  .head-inner{max-width:1120px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .logo{width:42px;height:42px;border-radius:11px;background:var(--red);
+    display:grid;place-items:center;font-weight:800;font-size:20px;box-shadow:0 4px 14px rgba(213,24,47,.5)}
+  .brand h1{font-size:20px;font-weight:800;letter-spacing:.3px}
+  .brand p{font-size:12.5px;color:#aeb4c0;margin-top:1px}
+
+  /* Tabs */
+  nav.tabs{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);
+    backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line)}
+  .tabs-inner{max-width:1120px;margin:0 auto;display:flex;gap:4px;padding:0 16px}
+  .tab{padding:15px 16px;font-weight:700;font-size:15px;color:var(--ink-soft);
+    border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+  .tab.active{color:var(--red);border-color:var(--red)}
+
+  main{max-width:1120px;margin:0 auto;padding:20px 16px 60px}
+
+  /* Controls */
+  .controls{display:flex;flex-direction:column;gap:14px;margin-bottom:18px}
+  .search{position:relative}
+  .search input{width:100%;padding:13px 16px 13px 44px;border:1px solid var(--line);
+    border-radius:12px;font-size:15px;background:var(--card);outline:none}
+  .search input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(213,24,47,.12)}
+  .search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);opacity:.4}
+
+  .seg{display:inline-flex;background:var(--chip);border-radius:12px;padding:4px;gap:4px;align-self:flex-start}
+  .seg button{border:0;background:transparent;padding:9px 16px;border-radius:9px;font-weight:700;
+    font-size:14px;color:var(--ink-soft);cursor:pointer}
+  .seg button.on{background:#fff;color:var(--ink);box-shadow:var(--shadow)}
+  .seg small{display:block;font-weight:500;font-size:11px;color:var(--ink-soft);margin-top:1px}
+  .seg button.on small{color:var(--red)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{border:1px solid var(--line);background:var(--card);padding:8px 13px;border-radius:999px;
+    font-size:13.5px;font-weight:600;color:var(--ink-soft);cursor:pointer;display:flex;gap:6px;align-items:center}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .chip .n{font-size:11px;opacity:.7}
+
+  .count{font-size:13px;color:var(--ink-soft);margin:2px 2px 14px}
+
+  /* Grid + cards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;
+    display:flex;flex-direction:column;border:1px solid var(--line)}
+  .thumb{aspect-ratio:4/3;background:#eef0f4 center/cover no-repeat;position:relative;cursor:pointer}
+  .thumb.empty{display:grid;place-items:center;color:#c2c7d0;font-size:34px}
+  .badge{position:absolute;top:10px;left:10px;background:rgba(24,26,31,.82);color:#fff;
+    font-size:11.5px;font-weight:700;padding:5px 10px;border-radius:999px;backdrop-filter:blur(4px)}
+  .card-body{padding:14px 15px 16px;display:flex;flex-direction:column;gap:9px;flex:1}
+  .card-body h3{font-size:16.5px;font-weight:800}
+  .row{font-size:13px;display:flex;gap:7px;align-items:flex-start}
+  .row .k{color:var(--ink-soft);flex:0 0 auto;font-weight:600}
+  .row .v{color:var(--ink)}
+  .tag-club{align-self:flex-start;background:#fff3f4;color:var(--red-dark);border:1px solid #f6d5d9;
+    font-size:12px;font-weight:700;padding:4px 9px;border-radius:8px}
+  .interval{align-self:flex-start;background:#eefaf1;color:#1c7a44;font-size:12px;font-weight:700;
+    padding:4px 9px;border-radius:8px}
+  .card-foot{margin-top:auto;padding-top:4px}
+  .btn-video{display:inline-flex;align-items:center;gap:7px;background:var(--red);color:#fff;
+    font-weight:700;font-size:13.5px;padding:9px 14px;border-radius:10px;width:100%;justify-content:center}
+  .btn-video:active{background:var(--red-dark)}
+  .btn-ghost{display:inline-flex;align-items:center;gap:6px;background:var(--chip);color:var(--ink-soft);
+    font-weight:600;font-size:13px;padding:9px 12px;border-radius:10px;justify-content:center;width:100%}
+
+  /* Location cards */
+  .loc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .loc .thumb{aspect-ratio:16/10}
+  .maps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .maps a{font-size:12.5px;font-weight:700;padding:9px 4px;border-radius:10px;text-align:center;border:1px solid var(--line)}
+  .m-g{background:#eaf1fe;color:#1a56db;border-color:#d3e0fb}
+  .m-a{background:#eafaf0;color:#128a4d;border-color:#cfeeda}
+  .m-w{background:#eef0ff;color:#4b48d6;border-color:#dcdcfb}
+  .phone{display:inline-flex;align-items:center;gap:7px;font-weight:800;color:var(--red-dark);font-size:15px}
+
+  .empty-state{text-align:center;color:var(--ink-soft);padding:60px 20px;font-size:15px}
+
+  /* Lightbox */
+  .lb{position:fixed;inset:0;background:rgba(10,11,15,.9);display:none;place-items:center;z-index:100;padding:24px}
+  .lb.on{display:grid}
+  .lb img{max-width:100%;max-height:90vh;border-radius:12px}
+  .lb .x{position:absolute;top:18px;right:22px;color:#fff;font-size:34px;cursor:pointer;line-height:1}
+
+  footer{max-width:1120px;margin:0 auto;padding:24px 16px 50px;color:var(--ink-soft);font-size:12.5px;text-align:center}
+
+  @media(max-width:520px){
+    .seg{width:100%}.seg button{flex:1}
+    .maps{grid-template-columns:repeat(3,1fr)}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="head-inner">
+    <div class="brand">
+      <div class="logo">F</div>
+      <div>
+        <h1>Freed Spike 交流區</h1>
+        <p>DIY 保養教學 &amp; 車友推薦地點</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-inner">
+    <div class="tab active" data-view="diy">🔧 DIY 教學</div>
+    <div class="tab" data-view="loc">📍 推薦地點</div>
+  </div>
+</nav>
+
+<main>
+  <!-- DIY VIEW -->
+  <section id="view-diy">
+    <div class="controls">
+      <div class="seg" id="modelSeg"></div>
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="q" type="search" placeholder="搜尋零件、型號、牌子…（例：頭燈、NGK、風隔）">
+      </div>
+      <div class="chips" id="catChips"></div>
+    </div>
+    <div class="count" id="diyCount"></div>
+    <div class="grid" id="diyGrid"></div>
+  </section>
+
+  <!-- LOCATION VIEW -->
+  <section id="view-loc" style="display:none">
+    <div class="controls">
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="ql" type="search" placeholder="搜尋車房 / 地點 / 地址…">
+      </div>
+    </div>
+    <div class="count" id="locCount"></div>
+    <div class="loc-grid" id="locGrid"></div>
+  </section>
+</main>
+
+<footer>
+  資料由車會 Airtable 匯出整理 · 雛型示範 · 相片已下載至本機 <code>assets/</code>
+</footer>
+
+<div class="lb" id="lb"><span class="x">&times;</span><img alt=""></div>
+
+<script src="data.js"></script>
+<script>
+const D = window.SITE_DATA;
+const catMap = Object.fromEntries(D.categories.map(c=>[c.id,c]));
+const state = {model:D.models[0].id, cat:'all', q:'', ql:''};
+
+/* ---------- helpers ---------- */
+const el = (t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
+const esc = s => (s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+function ytId(u){const m=(u||'').match(/(?:youtu\.be\/|v=)([\w-]{6,})/);return m?m[1]:null;}
+
+/* ---------- lightbox ---------- */
+const lb=document.getElementById('lb'), lbImg=lb.querySelector('img');
+function openLb(src){lbImg.src=src;lb.classList.add('on');}
+lb.addEventListener('click',()=>lb.classList.remove('on'));
+
+/* ---------- model switch ---------- */
+const modelSeg=document.getElementById('modelSeg');
+D.models.forEach(m=>{
+  const b=el('button',m.id===state.model?'on':'',`${m.name}<small>${m.years}</small>`);
+  b.onclick=()=>{state.model=m.id;[...modelSeg.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');renderCats();renderDiy();};
+  modelSeg.appendChild(b);
+});
+
+/* ---------- category chips ---------- */
+function currentItems(){return D.models.find(m=>m.id===state.model).items;}
+function renderCats(){
+  const items=currentItems();
+  const counts={};items.forEach(i=>counts[i.category]=(counts[i.category]||0)+1);
+  const chips=document.getElementById('catChips');chips.innerHTML='';
+  const all=el('div','chip'+(state.cat==='all'?' on':''),`全部 <span class="n">${items.length}</span>`);
+  all.onclick=()=>{state.cat='all';renderCats();renderDiy();};chips.appendChild(all);
+  D.categories.forEach(c=>{
+    if(!counts[c.id])return;
+    const ch=el('div','chip'+(state.cat===c.id?' on':''),`${c.icon} ${c.name} <span class="n">${counts[c.id]}</span>`);
+    ch.onclick=()=>{state.cat=c.id;renderCats();renderDiy();};chips.appendChild(ch);
+  });
+}
+
+/* ---------- DIY grid ---------- */
+function renderDiy(){
+  const grid=document.getElementById('diyGrid');grid.innerHTML='';
+  const q=state.q.trim().toLowerCase();
+  let items=currentItems().filter(i=>{
+    if(state.cat!=='all'&&i.category!==state.cat)return false;
+    if(q){const blob=(i.part+' '+i.spec+' '+i.club_spec+' '+i.interval).toLowerCase();if(!blob.includes(q))return false;}
+    return true;
+  });
+  document.getElementById('diyCount').textContent=`共 ${items.length} 個項目`;
+  if(!items.length){grid.appendChild(el('div','empty-state','搵唔到相符嘅項目 🔍'));return;}
+  items.forEach(i=>{
+    const cat=catMap[i.category]||{icon:'',name:''};
+    const card=el('div','card');
+    // thumb
+    if(i.images&&i.images.length){
+      const t=el('div','thumb');t.style.backgroundImage=`url("${i.images[0]}")`;
+      t.appendChild(el('span','badge',`${cat.icon} ${cat.name}`));
+      t.onclick=()=>openLb(i.images[0]);card.appendChild(t);
+    }else{
+      const t=el('div','thumb empty','🔧');t.appendChild(el('span','badge',`${cat.icon} ${cat.name}`));card.appendChild(t);
+    }
+    // body
+    const body=el('div','card-body');
+    body.appendChild(el('h3',null,esc(i.part)));
+    if(i.club_spec)body.appendChild(el('div','tag-club','★ 車會推薦：'+esc(i.club_spec)));
+    if(i.spec)body.appendChild(el('div','row',`<span class="k">型號</span><span class="v">${esc(i.spec)}</span>`));
+    if(i.interval)body.appendChild(el('div','interval','🔄 '+esc(i.interval)));
+    const foot=el('div','card-foot');
+    if(i.video){
+      const a=el('a','btn-video','▶ 睇 YouTube 教學');a.href=i.video;a.target='_blank';a.rel='noopener';foot.appendChild(a);
+    }else{
+      foot.appendChild(el('div','btn-ghost','暫無影片教學'));
+    }
+    body.appendChild(foot);card.appendChild(body);grid.appendChild(card);
+  });
+}
+
+/* ---------- Locations ---------- */
+function renderLoc(){
+  const grid=document.getElementById('locGrid');grid.innerHTML='';
+  const q=state.ql.trim().toLowerCase();
+  let items=D.locations.filter(l=>{
+    if(!q)return true;return (l.name+' '+l.address).toLowerCase().includes(q);
+  });
+  document.getElementById('locCount').textContent=`共 ${items.length} 個地點`;
+  if(!items.length){grid.appendChild(el('div','empty-state','搵唔到相符嘅地點 🔍'));return;}
+  items.forEach(l=>{
+    const card=el('div','card loc');
+    if(l.images&&l.images.length){
+      const t=el('div','thumb');t.style.backgroundImage=`url("${l.images[0]}")`;t.onclick=()=>openLb(l.images[0]);card.appendChild(t);
+    }
+    const body=el('div','card-body');
+    body.appendChild(el('h3',null,esc(l.name)));
+    if(l.address)body.appendChild(el('div','row',`<span class="k">📍</span><span class="v">${esc(l.address)}</span>`));
+    if(l.phone){const p=el('div');p.innerHTML=`<a class="phone" href="tel:${esc(l.phone)}">📞 ${esc(l.phone)}</a>`;body.appendChild(p);}
+    const maps=el('div','maps');
+    if(l.gmap)maps.appendChild(mapLink(l.gmap,'m-g','Google'));
+    if(l.amap)maps.appendChild(mapLink(l.amap,'m-a','高德'));
+    if(l.waze)maps.appendChild(mapLink(l.waze,'m-w','Waze'));
+    if(maps.children.length)body.appendChild(maps);
+    if(l.videos&&l.videos.length){
+      const a=el('a','btn-video','🎬 睇路線示範片');a.href=l.videos[0];a.target='_blank';a.rel='noopener';
+      body.appendChild(a);
+    }
+    card.appendChild(body);grid.appendChild(card);
+  });
+}
+function mapLink(href,cls,label){const a=el('a',cls,label);a.href=href;a.target='_blank';a.rel='noopener';return a;}
+
+/* ---------- tabs ---------- */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');
+    const v=t.dataset.view;
+    document.getElementById('view-diy').style.display=v==='diy'?'':'none';
+    document.getElementById('view-loc').style.display=v==='loc'?'':'none';
+  };
+});
+document.getElementById('q').addEventListener('input',e=>{state.q=e.target.value;renderDiy();});
+document.getElementById('ql').addEventListener('input',e=>{state.ql=e.target.value;renderLoc();});
+
+/* ---------- init ---------- */
+renderCats();renderDiy();renderLoc();
+</script>
+</body>
+</html>
