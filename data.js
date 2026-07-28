@@ -733,6 +733,58 @@ window.SITE_DATA = {
   ],
   "locations": [
     {
+      "id": "rec5iFzQKbsUobpUD",
+      "name": "Alignment Formula (四輪定位，避震，底盤 etc.)",
+      "phone": "9609 9347",
+      "address": "元朗公庵路",
+      "gmap": "https://maps.app.goo.gl/ys3aRNUt52XNUUKm7",
+      "amap": "https://surl.amap.com/lsvF4qVdKE",
+      "waze": "https://ul.waze.com/ul?place=ChIJ540o2oX6AzQR1jxdq8pJQmQ&ll=22.43367220%2C114.02335340&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
+      "images": [
+        "assets/locations/rec5iFzQKbsUobpUD_0.png"
+      ],
+      "videos": []
+    },
+    {
+      "id": "rec73lnCVF5tqOjx9",
+      "name": "福如汽車電池藍電紫電專門店（整冷氣）",
+      "phone": "2365 0596",
+      "address": "高山道山西街利榮大廈3號地下12號舖",
+      "gmap": "https://maps.app.goo.gl/hqyc3V4t9Nn11Aww6",
+      "amap": "https://surl.amap.com/aOqYai1i65M",
+      "waze": "https://ul.waze.com/ul?place=ChIJBxPJadkABDQRh6tOQOp8ZZs&ll=22.31334440%2C114.18649490&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
+      "images": [
+        "assets/locations/rec73lnCVF5tqOjx9_0.png"
+      ],
+      "videos": []
+    },
+    {
+      "id": "recFbfQLViKsP87Jn",
+      "name": "陶騰四輪定位（元朗) Whatsapp 預約",
+      "phone": "90269602",
+      "address": "元朗宏業西街20號雄偉工業大廈地下E舖 (喜業街)",
+      "gmap": "https://maps.app.goo.gl/yYDWcsTWkp79w83q7",
+      "amap": "https://surl.amap.com/jd7n0Gv8Q7",
+      "waze": "https://ul.waze.com/ul?place=ChIJR0Xmk7X7AzQRCKMF_PxalW4&ll=22.44962160%2C114.02793390&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
+      "images": [
+        "assets/locations/recFbfQLViKsP87Jn_0.png"
+      ],
+      "videos": []
+    },
+    {
+      "id": "recFymEGTFkgnNPm3",
+      "name": "陶騰四輪定位（荔枝角店）Whatsapp 預約",
+      "phone": "68978920",
+      "address": "荔枝角長順街20號時豐中心地下2號舖",
+      "gmap": "https://maps.app.goo.gl/NxKzEDb9RciqBJtg7",
+      "amap": "https://surl.amap.com/k0nZ4aF9mw",
+      "waze": "https://ul.waze.com/ul?place=ChIJWbCSJ0UHBDQRIiFIqm_nXmc&ll=22.33637420%2C114.14658290&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
+      "images": [
+        "assets/locations/recFymEGTFkgnNPm3_0.png"
+      ],
+      "videos": []
+    },
+    {
       "id": "recQAsEdzgOa0FSil",
       "name": "鴨脷洲大街明哥(基信汽車服務)",
       "phone": "90153261",
