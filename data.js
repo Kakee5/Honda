@@ -733,6 +733,19 @@ window.SITE_DATA = {
   ],
   "locations": [
     {
+      "id": "recQepS3t6IzlBgQ4",
+      "name": "車會會址",
+      "phone": "62926233",
+      "address": "九龍觀塘萬年工業大廈6樓C13室",
+      "gmap": "https://maps.app.goo.gl/dbEqGNgu72822zbB8",
+      "amap": "https://surl.amap.com/jZcY4o21l24j",
+      "waze": "https://www.waze.com/en/live-map/directions/hk/%E4%B9%9D%E9%BE%8D/%E8%90%AC%E5%B9%B4%E5%B7%A5%E6%A5%AD%E5%A4%A7%E5%BB%88?place=ChIJUeTGeEUBBDQRj3h-ww8a2EU",
+      "images": [
+        "assets/locations/39761872-4700-4c3f-aeaf-d4fed29685b4.JPG"
+      ],
+      "videos": []
+    },
+    {
       "id": "rec5iFzQKbsUobpUD",
       "name": "Alignment Formula (四輪定位，避震，底盤 etc.)",
       "phone": "9609 9347",
@@ -794,19 +807,6 @@ window.SITE_DATA = {
       "waze": "https://ul.waze.com/ul?ll=22.24471480%2C114.15713310&navigate=yes&zoom=17&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
       "images": [
         "assets/locations/recQAsEdzgOa0FSil_0.png"
-      ],
-      "videos": []
-    },
-    {
-      "id": "recQepS3t6IzlBgQ4",
-      "name": "車會會址",
-      "phone": "62926233",
-      "address": "九龍觀塘萬年工業大廈6樓C13室",
-      "gmap": "https://maps.app.goo.gl/dbEqGNgu72822zbB8",
-      "amap": "https://surl.amap.com/jZcY4o21l24j",
-      "waze": "https://www.waze.com/en/live-map/directions/hk/%E4%B9%9D%E9%BE%8D/%E8%90%AC%E5%B9%B4%E5%B7%A5%E6%A5%AD%E5%A4%A7%E5%BB%88?place=ChIJUeTGeEUBBDQRj3h-ww8a2EU",
-      "images": [
-        "assets/locations/39761872-4700-4c3f-aeaf-d4fed29685b4.JPG"
       ],
       "videos": []
     },
@@ -876,6 +876,19 @@ window.SITE_DATA = {
       "videos": [
         "assets/locations/recywhOEf9rbVh0s4_1.mp4"
       ]
+    },
+    {
+      "id": "reczseiQENZr5dDbP",
+      "name": "️YW耀華呔鈴專門店",
+      "phone": "9799 6757",
+      "address": "九龍灣啟祥道9號信和工商中心地下1號C舖 入口在啟成街",
+      "gmap": "https://maps.app.goo.gl/TnXZQf6QApb66r22A",
+      "amap": "https://surl.amap.com/KZ041k1xahB",
+      "waze": "https://ul.waze.com/ul?place=ChIJXaPwpgwHBDQR-ny8WC8MoHg&ll=22.32577170%2C114.20476330&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
+      "images": [
+        "assets/locations/reczseiQENZr5dDbP_0.png"
+      ],
+      "videos": []
     }
   ]
 };

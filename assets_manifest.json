@@ -311,5 +311,12 @@
       "type": "video/mp4",
       "status": "cached"
     }
+  ],
+  "reczseiQENZr5dDbP": [
+    {
+      "file": "assets/locations/reczseiQENZr5dDbP_0.png",
+      "type": "image/png",
+      "status": "downloaded"
+    }
   ]
 }

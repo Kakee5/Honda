@@ -78,6 +78,12 @@ MANUAL_LOC_IMAGES = {
     "recQepS3t6IzlBgQ4": ["assets/locations/39761872-4700-4c3f-aeaf-d4fed29685b4.JPG"],  # 車會會址
 }
 
+# The club's own address is pinned to the top of 推薦地點; everything else keeps the
+# order Airtable returns. Matched by record id, with a name fallback in case the
+# record is ever recreated with a new id.
+CLUB_LOCATION_ID = "recQepS3t6IzlBgQ4"
+CLUB_LOCATION_NAME = "車會會址"
+
 def build_locations():
     records = json.load(open(RAW / "locations.json"))
     items = []
@@ -100,6 +106,9 @@ def build_locations():
             "images": images,
             "videos": [i["path"] for i in imgs if i["video"]],
         })
+    # list.sort is stable, so this only lifts the club address and leaves the rest as-is
+    items.sort(key=lambda x: 0 if (x["id"] == CLUB_LOCATION_ID
+                                   or x["name"] == CLUB_LOCATION_NAME) else 1)
     return items
 
 data = {
