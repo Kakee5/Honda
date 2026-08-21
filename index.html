@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Freed Spike 交流區 · DIY 教學 &amp; 推薦地點</title>
+<title>Freed Spike 交流區 · 保養資訊、DIY 教學 &amp; 推薦地點</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -31,9 +31,11 @@
   /* Tabs */
   nav.tabs{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);
     backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line)}
-  .tabs-inner{max-width:1120px;margin:0 auto;display:flex;gap:4px;padding:0 16px}
+  .tabs-inner{max-width:1120px;margin:0 auto;display:flex;gap:4px;padding:0 16px;
+    overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .tabs-inner::-webkit-scrollbar{display:none}
   .tab{padding:15px 16px;font-weight:700;font-size:15px;color:var(--ink-soft);
-    border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+    border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;flex:0 0 auto}
   .tab.active{color:var(--red);border-color:var(--red)}
 
   main{max-width:1120px;margin:0 auto;padding:20px 16px 60px}
@@ -97,6 +99,34 @@
 
   .empty-state{text-align:center;color:var(--ink-soft);padding:60px 20px;font-size:15px}
 
+  /* Maintenance reference */
+  .maint-note{background:#fffbea;border:1px solid #f5e6b8;color:#6f5300;font-size:13px;
+    padding:12px 14px;border-radius:12px;margin-bottom:16px;line-height:1.6}
+  .maint-block{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
+  .maint-block h3{font-size:15.5px;font-weight:800;padding:14px 16px;background:#fafbfc;
+    border-bottom:1px solid var(--line)}
+  .maint-block .blk-note{font-size:12.5px;color:var(--ink-soft);padding:10px 16px;border-bottom:1px solid var(--line)}
+  table.maint{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.maint th{text-align:left;font-weight:700;color:var(--ink-soft);font-size:12.5px;
+    padding:11px 16px;border-bottom:1px solid var(--line)}
+  table.maint td{padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.maint tr:last-child td{border-bottom:0}
+  table.maint td.part{font-weight:800;white-space:nowrap}
+  .maint-list{padding:6px 16px 14px}
+  .maint-list li{font-size:13.5px;margin:8px 0 0 18px;line-height:1.6}
+  .dash{color:#c2c7d0}
+
+  @media(max-width:640px){
+    table.maint thead{display:none}
+    table.maint tr{display:block;border-bottom:1px solid var(--line);padding:9px 0}
+    table.maint tr:last-child{border-bottom:0}
+    table.maint td{display:flex;gap:10px;border:0;padding:5px 16px}
+    table.maint td::before{content:attr(data-label);flex:0 0 84px;color:var(--ink-soft);
+      font-weight:600;font-size:12.5px}
+    table.maint td.part{white-space:normal}
+  }
+
   /* Lightbox */
   .lb{position:fixed;inset:0;background:rgba(10,11,15,.9);display:none;place-items:center;z-index:100;padding:24px}
   .lb.on{display:grid}
@@ -108,6 +138,8 @@
   @media(max-width:520px){
     .seg{width:100%}.seg button{flex:1}
     .maps{grid-template-columns:repeat(3,1fr)}
+    .tabs-inner{padding:0 12px}
+    .tab{padding:15px 11px;font-size:14.5px}
   }
 </style>
 </head>
@@ -126,14 +158,27 @@
 
 <nav class="tabs">
   <div class="tabs-inner">
-    <div class="tab active" data-view="diy">🔧 DIY 教學</div>
+    <div class="tab active" data-view="maint">🛠️ 保養參考資訊</div>
+    <div class="tab" data-view="diy">🔧 DIY 教學</div>
     <div class="tab" data-view="loc">📍 推薦地點</div>
   </div>
 </nav>
 
 <main>
+  <!-- MAINTENANCE REFERENCE VIEW (landing page) -->
+  <section id="view-maint">
+    <div class="controls">
+      <div class="seg" id="maintSeg"></div>
+    </div>
+    <div class="maint-note">
+      ⚠️ 以下資料由車友整理，<strong>僅供參考</strong>。實際更換周期會因駕駛習慣、路況同車輛狀況而有所不同，
+      最終請以原廠保養手冊或技師建議為準。
+    </div>
+    <div id="maintBody"></div>
+  </section>
+
   <!-- DIY VIEW -->
-  <section id="view-diy">
+  <section id="view-diy" style="display:none">
     <div class="controls">
       <div class="seg" id="modelSeg"></div>
       <div class="search">
@@ -169,7 +214,80 @@
 <script>
 const D = window.SITE_DATA;
 const catMap = Object.fromEntries(D.categories.map(c=>[c.id,c]));
-const state = {model:D.models[0].id, cat:'all', q:'', ql:''};
+const state = {model:D.models[0].id, cat:'all', q:'', ql:'', maintModel:D.models[0].id};
+
+/* ---------- 保養參考資訊（靜態內容，直接在此編輯） ----------
+   每個型號係一個 block 陣列。block 支援兩種：
+     {title:'標題', note:'可選說明', type:'table', pillLast:true,
+      cols:['欄1','欄2'], rows:[['值1','值2'], ...]}     // 空值用 '' 會顯示 —
+     {title:'標題', type:'list', items:['第一點','第二點']}
+   要新增內容，照住格式加 block 就得；改完 push 上 GitHub 即生效。
+------------------------------------------------------------ */
+const MAINT = {
+  gb3_gp3: [
+    {
+      title: '定期保養參考周期',
+      note: '以下周期取自車會 Airtable 嘅「參考更換周期」記錄。',
+      type: 'table',
+      pillLast: true,
+      cols: ['項目', '規格', '車會推薦', '建議更換周期'],
+      rows: [
+        ['偈油', '0W20 / 5W30', 'Millers XF Premium C5 C6 0W20 / Millers EE Performance ECO 5W30', '5,000 - 10,000km / 6-12 months'],
+        ['冷氣隔', '', '日本 Miltfilter', '20,000km / 1 years'],
+        ['風隔', '', 'Blitz', '30,000km'],
+        ['洗天風 / 蝴蝶掩', '', '', '30,000 - 50,000km'],
+        ['波箱油', 'Hmmf Honda Multi Matic Fluid（橙色罐）', '', '40,000 - 80,000km / 2-4 years'],
+        ['換 COIL 火咀', 'NGK / Denso', 'NGK / High Spark Coil', 'Coil & 銥合金火咀：80,000 - 100,000km'],
+        ['電池', '', 'B19L 55AH 冇藍芽 / B19L 80AH 藍芽版', '水電 2 年'],
+      ],
+    },
+    {
+      title: '水溫參考',
+      note: '水溫會隨開唔開冷氣而浮動，開冷氣時風扇會較早啟動，水溫反而偏低。',
+      type: 'table',
+      cols: ['情況', '水溫'],
+      rows: [
+        ['正常 — 開冷氣', '80 - 86°C'],
+        ['正常 — 冇開冷氣', '84 - 90°C'],
+        ['兩把風扇啟動', '冇開冷氣時升到 97°C'],
+        ['自動回落', '上到 98°C 就會自己落返'],
+        ['需要跟進 ⚠️', '到 98 - 100°C 都唔識落'],
+        ['水溫警告燈亮起', '118 - 120°C 先會著'],
+      ],
+    },
+  ],
+  gb5_gb7: [
+    {
+      title: '定期保養參考周期',
+      note: '以下周期取自車會 Airtable 嘅「參考更換周期」記錄。',
+      type: 'table',
+      pillLast: true,
+      cols: ['項目', '規格', '車會推薦', '建議更換周期'],
+      rows: [
+        ['偈油', '0W20 / 5W30', 'Millers XF Premium C5 C6 0W20 / Millers EE Performance ECO 5W30', '5,000 - 10,000km / 6-12 months'],
+        ['冷氣隔', '', '日本 Miltfilter', '20,000km / 1 years'],
+        ['風隔', '', 'Blitz', '30,000km'],
+        ['洗天風 / 蝴蝶掩', '', '', '30,000 - 50,000km'],
+        ['波箱油', 'GB5：HFC-2 / GB7：ATF-DW1 Ultra', '', '40,000 - 80,000km / 2-4 years'],
+        ['換 COIL 火咀', 'NGK / Denso', 'NGK / High Spark Coil', 'Coil & 銥合金火咀：80,000 - 100,000km'],
+        ['電池', '', 'B19L 55AH 冇藍芽 / B19L 80AH 藍芽版（GB5 用 24L，落單要特別註明）', '水電 2 年'],
+      ],
+    },
+    {
+      title: '極力子油（GB7 Hybrid 專用）',
+      note: 'GB7 Hybrid 用 i-DCD 7 速雙離合器波箱，設有獨立極力子油壺。GB5 汽油版冇此項目。',
+      type: 'table',
+      cols: ['項目', '內容'],
+      rows: [
+        ['規格', 'DOT 4 煞車油 — 切勿誤用波箱油'],
+        ['推薦', '原廠 Honda Brake & Clutch Fluid DOT 4；或 Ate SL / Motul / Brembo DOT 4'],
+        ['用量', '沖洗油壺連放氣約 0.5 - 1 公升'],
+        ['更換周期', '每 2 年 或 30,000 - 40,000km'],
+        ['唔換後果', '極力子油易吸水，長期唔換會令極力子泵生鏽、漏油，最終波箱報錯、跳波甚至鎖死，維修費非常昂貴'],
+      ],
+    },
+  ],
+};
 
 /* ---------- helpers ---------- */
 const el = (t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
@@ -274,20 +392,68 @@ function renderLoc(){
 }
 function mapLink(href,cls,label){const a=el('a',cls,label);a.href=href;a.target='_blank';a.rel='noopener';return a;}
 
+/* ---------- 保養參考資訊 ---------- */
+const maintSeg=document.getElementById('maintSeg');
+D.models.forEach(m=>{
+  const b=el('button',m.id===state.maintModel?'on':'',`${m.name}<small>${m.years}</small>`);
+  b.onclick=()=>{state.maintModel=m.id;[...maintSeg.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');renderMaint();};
+  maintSeg.appendChild(b);
+});
+
+function renderMaint(){
+  const wrap=document.getElementById('maintBody');wrap.innerHTML='';
+  const blocks=MAINT[state.maintModel]||[];
+  if(!blocks.length){wrap.appendChild(el('div','empty-state','呢個型號暫時未有保養資料 🛠️'));return;}
+  blocks.forEach(b=>{
+    const box=el('div','maint-block');
+    box.appendChild(el('h3',null,esc(b.title)));
+    if(b.note)box.appendChild(el('div','blk-note',esc(b.note)));
+    if(b.type==='list'){
+      const ul=el('ul','maint-list');
+      (b.items||[]).forEach(i=>ul.appendChild(el('li',null,esc(i))));
+      box.appendChild(ul);
+    }else{
+      const table=el('table','maint');
+      const thead=el('thead'),htr=el('tr');
+      b.cols.forEach(c=>{const th=el('th',null,esc(c));th.setAttribute('scope','col');htr.appendChild(th);});
+      thead.appendChild(htr);table.appendChild(thead);
+      const tbody=el('tbody');
+      (b.rows||[]).forEach(r=>{
+        const tr=el('tr');
+        b.cols.forEach((col,i)=>{
+          const td=el('td',i===0?'part':null);
+          td.setAttribute('data-label',col);
+          const cell=r[i];
+          if(cell==null||cell===''){td.innerHTML='<span class="dash">—</span>';}
+          else if(b.pillLast&&i===b.cols.length-1){td.innerHTML=`<span class="interval">${esc(cell)}</span>`;}
+          else{td.textContent=cell;}
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);box.appendChild(table);
+    }
+    wrap.appendChild(box);
+  });
+}
+
 /* ---------- tabs ---------- */
+const VIEWS=['maint','diy','loc'];
 document.querySelectorAll('.tab').forEach(t=>{
   t.onclick=()=>{
     document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');
     const v=t.dataset.view;
-    document.getElementById('view-diy').style.display=v==='diy'?'':'none';
-    document.getElementById('view-loc').style.display=v==='loc'?'':'none';
+    VIEWS.forEach(name=>{
+      const sec=document.getElementById('view-'+name);
+      if(sec)sec.style.display=(name===v)?'':'none';
+    });
   };
 });
 document.getElementById('q').addEventListener('input',e=>{state.q=e.target.value;renderDiy();});
 document.getElementById('ql').addEventListener('input',e=>{state.ql=e.target.value;renderLoc();});
 
 /* ---------- init ---------- */
-renderCats();renderDiy();renderLoc();
+renderCats();renderDiy();renderLoc();renderMaint();
 </script>
 </body>
 </html>
