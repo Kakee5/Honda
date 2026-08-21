@@ -97,28 +97,48 @@ $git = "$env:ProgramFiles\Git\cmd\git.exe"
 Git identity is set locally in this repo (`Freed Spike <freedspike@users.noreply.github.com>`)
 to match the existing history — do not rely on a global config being present.
 
-### 3. Git Credential Manager hangs the agent terminal
-Running `git push` from Kiro's shell on Windows triggers the GCM browser/GUI login, and that
-process **never returns** — the push may actually complete, but the terminal stays blocked and
-every following command silently returns nothing for several minutes. This has already caused
-one false "push failed" diagnosis.
+### 3. Always push non-interactively — the GCM login hangs the agent terminal
+GCM credentials for `Kakee5/Honda` are **already cached on this machine** (stored during the
+first successful interactive login). So the only thing needed is to stop git from ever trying
+to open the login UI. Set these two variables and push normally:
+```powershell
+$env:GIT_TERMINAL_PROMPT = "0"   # no terminal prompt
+$env:GCM_INTERACTIVE     = "never"  # no GUI/browser prompt
+& $git push origin main
+```
+Verified working: pushes complete immediately with `PUSH_EXIT=0`, no prompt, no hang.
 
-Two ways to avoid it:
-- **Preferred:** run the push yourself in a normal terminal, where the GCM prompt is interactive.
-- **Non-interactive:** feed a short-lived PAT through `GIT_ASKPASS` and disable GCM for that
-  one invocation, so it fails fast instead of hanging:
-  ```powershell
-  # askpass.cmd (place OUTSIDE the repo, e.g. in $env:TEMP):
-  #   @echo off
-  #   echo %HONDA_TOKEN%
-  $env:HONDA_TOKEN         = "<short-lived PAT>"
-  $env:GIT_ASKPASS         = "$env:TEMP\askpass.cmd"
-  $env:GIT_TERMINAL_PROMPT = "0"
-  $env:GCM_INTERACTIVE     = "never"
-  & $git -c credential.helper= push https://x-access-token@github.com/Kakee5/Honda.git main
-  ```
-  Delete the askpass file and revoke the token afterwards. Keeps the token out of git config,
-  the remote URL, and the repo.
+**Why this matters:** if the login UI *is* triggered (i.e. you push without these variables and
+the cache ever gets cleared), the git process **never returns**. The push may still complete
+server-side, but the terminal stays blocked and every following command silently returns empty
+output for several minutes. That already caused one false "push failed" diagnosis — the push had
+actually succeeded. With the variables set, git fails fast with a clear error instead.
+
+**Fallback if the credential cache is ever lost** (push errors with an auth failure): either run
+the push in your own normal terminal, where the GCM prompt is interactive and works fine, or feed
+a short-lived PAT through `GIT_ASKPASS`:
+```powershell
+# askpass.cmd (place OUTSIDE the repo, e.g. in $env:TEMP):
+#   @echo off
+#   echo %HONDA_TOKEN%
+$env:HONDA_TOKEN         = "<short-lived PAT>"
+$env:GIT_ASKPASS         = "$env:TEMP\askpass.cmd"
+$env:GIT_TERMINAL_PROMPT = "0"
+$env:GCM_INTERACTIVE     = "never"
+& $git -c credential.helper= push https://x-access-token@github.com/Kakee5/Honda.git main
+```
+Delete the askpass file and revoke the token afterwards. Keeps the token out of git config, the
+remote URL, and the repo. Note the PAT needs **Contents: Read and write** on `Kakee5/Honda`; a
+token without it fails with `remote: Permission to Kakee5/Honda.git denied` / HTTP 403.
+
+### 4. Don't put the repo path inside a helper .ps1
+`powershell.exe` 5.1 reads `.ps1` files as ANSI unless they have a UTF-8 BOM. A script saved as
+UTF-8 that hard-codes this repo's path gets mangled — `文件` becomes `?辣` — and `Set-Location`
+then fails with "找不到路徑，因為它不存在".
+
+Write helper scripts with no Chinese literals and rely on the inherited working directory
+instead: the child `powershell` process starts in whatever cwd the tool call used, which is
+already the repo root, so git commands work without any `Set-Location` at all.
 
 ### Verifying a push when the terminal is unreliable
 Don't trust terminal silence. Check the remote ref directly — this needs no auth and no shell:
@@ -138,7 +158,9 @@ terminal, and clean the scratch files up before committing (they are not gitigno
 4. Preview locally: `python3 -m http.server 8000` then open `http://localhost:8000/`.
    (Opening index.html via file:// works too since data is in data.js, not fetched.)
 5. On Windows, also read "Running the pipeline on Windows / PowerShell" above — UTF-8,
-   git-not-on-PATH and the credential-manager hang all need handling there.
+   git-not-on-PATH, non-interactive push and the ANSI-.ps1 trap all need handling there.
+   (A fresh clone on a new Windows box will need one interactive GCM login to seed the
+   credential cache before the non-interactive push works.)
 
 ## Deployment (GitHub Pages)
 - Settings → Pages → Deploy from branch → `main` / root.
@@ -147,8 +169,11 @@ terminal, and clean the scratch files up before committing (they are not gitigno
 ## Gotchas learned the hard way
 - macOS system Python has an SSL cert issue → all HTTP calls use `curl` (via subprocess), not urllib.
 - Windows Python defaults to `cp950` and cannot write the Chinese data → always `PYTHONUTF8=1`.
-- On Windows, `git push` from the agent terminal hangs on Git Credential Manager; verify the
-  push against the GitHub refs API rather than believing the terminal. See the Windows section.
+- On Windows, always push with `GIT_TERMINAL_PROMPT=0` + `GCM_INTERACTIVE=never`. Credentials are
+  already cached; without these, a GCM login prompt can hang the terminal indefinitely and make a
+  successful push look like a failure. Verify against the GitHub refs API, not the terminal.
+- Helper `.ps1` files must not hard-code the repo path — PowerShell 5.1 reads them as ANSI and
+  mangles the Chinese folder name. Rely on the inherited cwd instead.
 - GitHub Pages is case-sensitive (Linux). The club logo file is `.JPG` (uppercase) — keep references exact.
 - Pushing needs a GitHub PAT (Contents: Read & write on `Kakee5/Honda`). Never store it in
   git config/remote URL — push with an inline credential helper and a short-lived token, then revoke.
