@@ -116,6 +116,11 @@
   .maint-list{padding:6px 16px 14px}
   .maint-list li{font-size:13.5px;margin:8px 0 0 18px;line-height:1.6}
   .dash{color:#c2c7d0}
+  .maint-fig{border-top:1px solid var(--line);padding:14px 16px 16px}
+  .maint-fig img{width:100%;max-width:460px;display:block;margin:0 auto;border-radius:12px;
+    border:1px solid var(--line);cursor:zoom-in;background:#eef0f4}
+  .maint-fig figcaption{font-size:12.5px;color:var(--ink-soft);text-align:center;
+    margin-top:9px;line-height:1.6}
 
   @media(max-width:640px){
     table.maint thead{display:none}
@@ -285,6 +290,11 @@ const MAINT = {
         ['更換周期', '每 2 年 或 30,000 - 40,000km'],
         ['唔換後果', '極力子油易吸水，長期唔換會令極力子泵生鏽、漏油，最終波箱報錯、跳波甚至鎖死，維修費非常昂貴'],
       ],
+      image: {
+        src: 'assets/maint/gb7_clutch_fluid_before_after.jpeg',
+        alt: 'GB7 極力子油壺換油前後對比',
+        caption: '上半部：換之前嘅舊油（深褐色）　·　下半部：換之後嘅新油（清透）',
+      },
     },
   ],
 };
@@ -432,6 +442,19 @@ function renderMaint(){
         tbody.appendChild(tr);
       });
       table.appendChild(tbody);box.appendChild(table);
+    }
+    if(b.image&&b.image.src){
+      const fig=el('figure','maint-fig');
+      const img=document.createElement('img');
+      img.src=b.image.src;
+      img.alt=b.image.alt||b.image.caption||b.title;
+      img.loading='lazy';
+      img.onclick=()=>openLb(b.image.src);
+      // 相片未上傳時整段隱藏，避免出現破圖
+      img.onerror=()=>fig.remove();
+      fig.appendChild(img);
+      if(b.image.caption)fig.appendChild(el('figcaption',null,esc(b.image.caption)));
+      box.appendChild(fig);
     }
     wrap.appendChild(box);
   });

@@ -51,39 +51,51 @@ Unmapped parts fall back to `tools`.
 - `.env` — Airtable token (gitignored, must be recreated on each machine).
 
 ## Re-sync pipeline (run after any Airtable change)
-```bash
-python3 fetch_airtable.py      # 1. pull latest from Airtable
-python3 download_assets.py     # 2. download new images/videos
-python3 build_data.py          # 3. rebuild categorized site_data.json
+**This project is now maintained on the Windows machine only.** The Mac is no longer used, so
+treat the PowerShell commands below as the canonical pipeline. Copy-paste this block:
+
+```powershell
+$env:PYTHONUTF8 = "1"                 # mandatory, see quirk 1 below
+$git = "$env:ProgramFiles\Git\cmd\git.exe"   # git is not on PATH, see quirk 2
+
+python fetch_airtable.py              # 1. pull latest from Airtable
+python download_assets.py             # 2. download new images/videos
+python build_data.py                  # 3. rebuild categorized site_data.json
 # 4. regenerate data.js:
-python3 -c "import pathlib; d=open('site_data.json').read(); pathlib.Path('data.js').write_text('window.SITE_DATA = '+d+';\n', encoding='utf-8')"
-# 5. commit & push
-git add -A && git commit -m "sync Airtable" && git push origin main
+python -c "import pathlib; d=open('site_data.json',encoding='utf-8').read(); pathlib.Path('data.js').write_text('window.SITE_DATA = '+d+';\n', encoding='utf-8')"
+
+# 5. commit & push (non-interactive, see quirk 3)
+$env:GIT_TERMINAL_PROMPT = "0"
+$env:GCM_INTERACTIVE     = "never"
+& $git add -A
+& $git commit -F <utf-8 message file>   # see quirk 5 if the message contains Chinese
+& $git push origin main
 ```
 
-## Running the pipeline on Windows / PowerShell
-The commands above assume macOS. On the Windows machine three things differ. All three have
-bitten us before — read this before running a sync there.
+<details>
+<summary>Historical: the original macOS commands (kept for reference only)</summary>
+
+```bash
+python3 fetch_airtable.py
+python3 download_assets.py
+python3 build_data.py
+python3 -c "import pathlib; d=open('site_data.json').read(); pathlib.Path('data.js').write_text('window.SITE_DATA = '+d+';\n', encoding='utf-8')"
+git add -A && git commit -m "sync Airtable" && git push origin main
+```
+</details>
+
+## Windows / PowerShell quirks — read before running anything
+Every one of these has broken a sync or a push before. They are not hypothetical.
 
 ### 1. Force UTF-8 or the scripts crash
 Windows Python defaults to the `cp950` codec, which cannot encode some of the Chinese
 characters in the Airtable data. `fetch_airtable.py` dies with
 `UnicodeEncodeError: 'cp950' codec can't encode character ...`.
-Set this once per shell session before running anything:
-```powershell
-$env:PYTHONUTF8 = "1"
-```
-Also pass `encoding='utf-8'` explicitly when reading `site_data.json` in the data.js step.
-Full pipeline in PowerShell:
-```powershell
-$env:PYTHONUTF8 = "1"
-python fetch_airtable.py
-python download_assets.py
-python build_data.py
-python -c "import pathlib; d=open('site_data.json',encoding='utf-8').read(); pathlib.Path('data.js').write_text('window.SITE_DATA = '+d+';\n', encoding='utf-8')"
-```
-(`python`, not `python3`, on Windows. `curl` is built in at `C:\Windows\System32\curl.exe`,
-so the subprocess calls work unchanged.)
+Fix: `$env:PYTHONUTF8 = "1"` once per shell session, and pass `encoding='utf-8'` explicitly when
+reading `site_data.json` in the data.js step (both already in the pipeline block above).
+
+Note `python`, not `python3`, on Windows. `curl` is built in at `C:\Windows\System32\curl.exe`,
+so the scripts' subprocess calls work unchanged.
 
 ### 2. git is not on PATH
 Git was installed with `winget install --id Git.Git -e` but its directory was never added to
@@ -131,14 +143,40 @@ Delete the askpass file and revoke the token afterwards. Keeps the token out of 
 remote URL, and the repo. Note the PAT needs **Contents: Read and write** on `Kakee5/Honda`; a
 token without it fails with `remote: Permission to Kakee5/Honda.git denied` / HTTP 403.
 
-### 4. Don't put the repo path inside a helper .ps1
-`powershell.exe` 5.1 reads `.ps1` files as ANSI unless they have a UTF-8 BOM. A script saved as
-UTF-8 that hard-codes this repo's path gets mangled — `文件` becomes `?辣` — and `Set-Location`
-then fails with "找不到路徑，因為它不存在".
+### 4. Never put Chinese text inside a helper .ps1
+`powershell.exe` 5.1 reads `.ps1` files as ANSI unless they carry a UTF-8 BOM, so **any** Chinese
+literal in a helper script gets mangled. Two ways this has already bitten:
 
-Write helper scripts with no Chinese literals and rely on the inherited working directory
-instead: the child `powershell` process starts in whatever cwd the tool call used, which is
-already the repo root, so git commands work without any `Set-Location` at all.
+- Hard-coded repo path → `文件` became `?辣`, and `Set-Location` failed with
+  "找不到路徑，因為它不存在".
+- Hard-coded commit message → the commit landed on GitHub as
+  `sync Airtable: add YW??臬??游??摨? pin 頠???`, which then needed an amend + force push to fix.
+
+Rules: keep helper scripts ASCII-only, and rely on the inherited working directory (the child
+`powershell` starts in the cwd the tool call used, already the repo root — no `Set-Location`
+needed at all).
+
+### 5. Chinese commit messages must come from a UTF-8 file
+Because of quirk 4, never pass a Chinese message with `git commit -m` from a script. Write the
+message to a UTF-8 file (no BOM) and use `-F`:
+```powershell
+& $git commit -F "$env:TEMP\msg.txt"
+```
+Strip a possible BOM first — a BOM would end up as an invisible character at the start of the
+subject line:
+```powershell
+python -c "import io,sys; p=sys.argv[1]; d=io.open(p,encoding='utf-8-sig').read(); io.open(p,'w',encoding='utf-8',newline='\n').write(d)" "$env:TEMP\msg.txt"
+```
+Verified working. To fix an already-pushed mangled message, `git commit --amend -F <file>` with
+**nothing staged** (so the tree is untouched — compare `git rev-parse HEAD^{tree}` before and
+after), then `git push --force-with-lease origin main`. Never plain `--force`.
+
+### 6. Adding a nav tab can break the mobile layout
+`.tabs-inner` is a flex row of `white-space:nowrap` tabs. Going from 2 to 3 tabs pushed the row
+to 400px, which made the **whole page** horizontally scrollable at a 390px viewport. Fixed by
+giving `.tabs-inner` `overflow-x:auto` (scrollbar hidden) plus tighter tab padding under 520px,
+so the overflow is confined to the tab strip. If a 4th tab is ever added, re-check at 390px and
+320px that `document.documentElement.scrollWidth <= window.innerWidth`.
 
 ### Verifying a push when the terminal is unreliable
 Don't trust terminal silence. Check the remote ref directly — this needs no auth and no shell:
@@ -150,43 +188,69 @@ Kiro's PowerShell integration echoes commands back garbled and often shows empty
 for commands that ran fine. Write output to a file and read that file instead of trusting the
 terminal, and clean the scratch files up before committing (they are not gitignored).
 
-## Environment setup on a new machine
+## Current working machine
+Windows only. Everything needed is already installed and configured:
+- Python 3.12 at `python` · `curl` at `C:\Windows\System32\curl.exe`
+- Git at `C:\Program Files\Git\cmd\git.exe` (installed via winget, **not** on PATH)
+- git identity set locally in this repo: `Freed Spike <freedspike@users.noreply.github.com>`
+- GCM credentials for `Kakee5/Honda` already cached → non-interactive push works
+- `.env` with `AIRTABLE_TOKEN` present (gitignored)
+
+<details>
+<summary>Setting up from scratch on another machine (not currently needed)</summary>
+
 1. `git clone https://github.com/Kakee5/Honda.git`
-2. Create `.env` with: `AIRTABLE_TOKEN=pat...` (get from https://airtable.com/create/tokens,
-   scopes `data.records:read` + `schema.bases:read`, with the 3 bases added to Access).
-3. Python 3 (uses only stdlib + curl). Node + `sharp` only needed for favicon regen.
-4. Preview locally: `python3 -m http.server 8000` then open `http://localhost:8000/`.
-   (Opening index.html via file:// works too since data is in data.js, not fetched.)
-5. On Windows, also read "Running the pipeline on Windows / PowerShell" above — UTF-8,
-   git-not-on-PATH, non-interactive push and the ANSI-.ps1 trap all need handling there.
-   (A fresh clone on a new Windows box will need one interactive GCM login to seed the
-   credential cache before the non-interactive push works.)
+2. Create `.env` with `AIRTABLE_TOKEN=pat...` (from https://airtable.com/create/tokens,
+   scopes `data.records:read` + `schema.bases:read`, the 3 bases added to Access).
+3. Python 3 (stdlib + curl only). Node + `sharp` only needed for favicon regen.
+4. Preview locally: `python -m http.server 8000` → `http://localhost:8000/`.
+   (Opening index.html via file:// works too since data lives in data.js, not fetched.)
+5. On Windows, expect one interactive GCM login to seed the credential cache before the
+   non-interactive push works, then read the quirks section above.
+</details>
 
 ## Deployment (GitHub Pages)
 - Settings → Pages → Deploy from branch → `main` / root.
-- Pages takes 1–3 min to rebuild after each push; hard-refresh (Cmd+Shift+R) to bust favicon cache.
+- Pages takes 1–3 min to rebuild after each push; hard-refresh (Ctrl+Shift+R) to bust favicon cache.
+- Verify the live result by loading the page and reading `window.SITE_DATA`, not by eyeballing.
 
 ## Gotchas learned the hard way
-- macOS system Python has an SSL cert issue → all HTTP calls use `curl` (via subprocess), not urllib.
 - Windows Python defaults to `cp950` and cannot write the Chinese data → always `PYTHONUTF8=1`.
-- On Windows, always push with `GIT_TERMINAL_PROMPT=0` + `GCM_INTERACTIVE=never`. Credentials are
-  already cached; without these, a GCM login prompt can hang the terminal indefinitely and make a
+- Always push with `GIT_TERMINAL_PROMPT=0` + `GCM_INTERACTIVE=never`. Credentials are already
+  cached; without these a GCM login prompt can hang the terminal indefinitely and make a
   successful push look like a failure. Verify against the GitHub refs API, not the terminal.
-- Helper `.ps1` files must not hard-code the repo path — PowerShell 5.1 reads them as ANSI and
-  mangles the Chinese folder name. Rely on the inherited cwd instead.
+- Helper `.ps1` files must be ASCII-only (PowerShell 5.1 reads them as ANSI). Chinese paths and
+  Chinese commit messages both get mangled — use inherited cwd and `git commit -F <utf-8 file>`.
+- Adding a nav tab can make the whole page scroll horizontally on mobile. See quirk 6.
 - GitHub Pages is case-sensitive (Linux). The club logo file is `.JPG` (uppercase) — keep references exact.
-- Pushing needs a GitHub PAT (Contents: Read & write on `Kakee5/Honda`). Never store it in
-  git config/remote URL — push with an inline credential helper and a short-lived token, then revoke.
+- All HTTP calls in the Python scripts go through `curl` via subprocess (originally a macOS SSL
+  cert workaround). It works fine on Windows, so leave it as is.
 - If edits were made on GitHub web, `git pull --rebase origin main` before pushing.
 - Do NOT commit `node_modules`, `.env`, or unrelated large media. See `.gitignore`.
 
 ## Current state (as of last sync)
-- GB3/GP3: 32 DIY items · GB5/GB7: 25 DIY items · 推薦地點: 11 locations.
+- GB3/GP3: 32 DIY items · GB5/GB7: 25 DIY items · 推薦地點: 12 locations.
+- Three tabs, in order: **保養參考資訊** (landing page) · DIY 教學 · 推薦地點.
+- 保養參考資訊 is **static content** hard-coded in the `MAINT` const inside `index.html`
+  (not from Airtable — editing it means editing code and pushing). Split by model:
+  - GB3/GP3: 定期保養參考周期 (7 rows, sourced from Airtable 參考更換周期) · 水溫參考 (6 rows)
+  - GB5/GB7: 定期保養參考周期 (7 rows) · 極力子油（GB7 Hybrid 專用）(5 rows + before/after photo)
+  - Block format supports `type:'table'` and `type:'list'`, plus an optional
+    `image:{src,alt,caption}` rendered as a clickable `.maint-fig` (opens the lightbox). The
+    renderer removes the whole `<figure>` on `onerror`, so a missing file degrades silently
+    instead of showing a broken image.
+  - Hand-added maintenance photos live in `assets/maint/` — a directory `download_assets.py`
+    never touches, so a re-sync can't wipe them. Use ASCII filenames with no spaces
+    (GitHub Pages is case-sensitive and served over HTTP).
+  - 車會會址 is pinned to the top of 推薦地點 by a stable sort in `build_data.py`
+    (`CLUB_LOCATION_ID` / `CLUB_LOCATION_NAME`).
 - Features: model switch, category filters, search, image lightbox, YouTube教學 buttons,
   per-location map buttons (Google/高德/Waze), route-demo video button (林叔), club-logo favicon.
 
 ## Possible next steps / ideas (not yet done)
-- Bundle the re-sync pipeline into a single `sync.sh`.
+- Bundle the re-sync pipeline into a single `sync.ps1`.
+- If 保養參考資訊 starts changing often, move it out of `index.html` into a 4th Airtable base so
+  it can be synced instead of hand-edited.
 - Swap the header "F" placeholder box for the real club logo image.
 - Generate a QR code linking to the live site.
 - Optional: reduce image sizes (assets ~50MB) if repo size becomes a concern.
