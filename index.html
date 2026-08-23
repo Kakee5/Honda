@@ -20,13 +20,21 @@
   a{color:inherit;text-decoration:none}
 
   /* Header */
-  header{background:linear-gradient(135deg,#1c1e24,#2b2e37);color:#fff;padding:26px 20px 18px}
+  /* 車會 banner 圖本身已經有「FREED SPIKE 交流區」字樣，所以直接當 heading 用。
+     用原比例出，唔 crop，構圖（兩架車 + 青馬大橋夜景）保持完整。
+     h1 用 .sr-only 保留落 DOM，screen reader 同 SEO 照讀到，圖片當裝飾 alt=""。 */
+  header{background:#0e1015;color:#fff}
   .head-inner{max-width:1120px;margin:0 auto}
-  .brand{display:flex;align-items:center;gap:12px}
-  .brand .logo{width:42px;height:42px;border-radius:11px;background:var(--red);
-    display:grid;place-items:center;font-weight:800;font-size:20px;box-shadow:0 4px 14px rgba(213,24,47,.5)}
-  .brand h1{font-size:20px;font-weight:800;letter-spacing:.3px}
-  .brand p{font-size:12.5px;color:#aeb4c0;margin-top:1px}
+  /* 手機：滿版闊度（高度自然係闊度 ÷ 1.84）。
+     闊螢幕：改為鎖高度，闊度跟住比例縮，唔會食咗整個第一屏。 */
+  .hero{display:block;width:100%;max-width:960px;margin:0 auto;height:auto}
+  @media(min-width:560px){
+    .hero{width:auto;max-width:100%;height:240px}
+  }
+  .tagline{font-size:12.5px;color:#aeb4c0;text-align:center;padding:10px 20px 12px;
+    background:linear-gradient(180deg,#12141a,#181b22)}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
   /* Tabs */
   nav.tabs{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);
@@ -151,14 +159,10 @@
 <body>
 <header>
   <div class="head-inner">
-    <div class="brand">
-      <div class="logo">F</div>
-      <div>
-        <h1>Freed Spike 交流區</h1>
-        <p>DIY 保養教學 &amp; 車友推薦地點</p>
-      </div>
-    </div>
+    <img class="hero" src="assets/brand/hero.jpg" alt="" width="960" height="521">
+    <h1 class="sr-only">Freed Spike 交流區</h1>
   </div>
+  <p class="tagline">DIY 保養教學 &amp; 車友推薦地點</p>
 </header>
 
 <nav class="tabs">

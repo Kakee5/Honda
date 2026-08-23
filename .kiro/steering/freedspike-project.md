@@ -29,12 +29,46 @@ Note: both DIY bases use the same table id — key data by base, not table id.
 ### Fields
 - DIY tables: `零件位置` (part), `型號` (spec), `車會提供型號` (club-recommended brand),
   `參考更換周期` (interval), `影片教學` (YouTube link), `Attachments` (images).
-- Locations table: `Name`, `電話`, `地址`, `Google Map`, `高德地圖`, `WAZE`, `Remark` (images/video).
+- Locations table: `Name`, `電話`, `地址`, `Google Map`, `高德地圖`, `WAZE`, `Remark` (images/video),
+  `類型` (service category — drives the 推薦地點 filter pills, see below).
 
-### Categories (assigned in build_data.py CATEGORY_MAP)
+### DIY categories (assigned in build_data.py CATEGORY_MAP)
 lighting 燈光系統 / engine 引擎‧油水‧保養 / electronics 電子‧音響 /
 body 車身‧外觀 / interior 內飾‧門板 / tools 工具‧其他.
 Unmapped parts fall back to `tools`.
+
+### Location categories (Airtable 類型 field → filter pills)
+The 推薦地點 tab has filter pills mirroring the DIY ones. Unlike DIY (where the category is
+*derived* from `零件位置` via `CATEGORY_MAP`), a location's category **is the Airtable string
+itself** — there is no mapping table. `LOCATION_CATEGORIES` in `build_data.py` only fixes the
+display order and picks an icon:
+
+| 類型 (Airtable single select) | icon | count at last sync |
+|---|---|---|
+| 車房／綜合維修 | 🔧 | 4 |
+| 呔鈴／膠輪 | 🛞 | 4 |
+| 四輪定位／底盤避震 | 📐 | 3 |
+| 電池 | 🔋 | 2 |
+| 噴油／車身 | 🎨 | 1 |
+| 車會 | 🏠 | 1 |
+
+Why it is built this way:
+- **The user maintains 類型 in Airtable, so adding a location needs no code change.** This was a
+  deliberate choice over keyword-inference from the shop name (店名 like 明哥 / 噴油平哥 have no
+  usable keyword) and over a hard-coded record-id map (every new shop would need an edit + push).
+- **A value not in `LOCATION_CATEGORIES` is grouped into 其他 (📍) and printed as a warning, not
+  hidden.** So a typo in Airtable can never make a location silently vanish from the site. If a
+  new option appears, add it to `LOCATION_CATEGORIES` to give it an icon and a sort position.
+- **Always `.strip()` the value.** Airtable data contains leading spaces — at last sync both
+  battery shops had `" 電池"`. Without the strip you get two separate pills for one category.
+  (Same trap exists on `電話`: 福如's phone is stored as `" 2365 0596"`.)
+- `類型` is a **single select**, so a shop that does several things sits in one bucket only
+  (福如 does 電池 + 冷氣; Alignment Formula does 定位 + 避震 + 底盤). Multi-select was suggested
+  and the user chose single — do not re-litigate this.
+- Pills only filter. They do not reorder: 車會會址 stays pinned first, everything else keeps
+  Airtable order.
+- `location_categories(items)` runs **before** the JSON dump because it rewrites unknown
+  categories in place.
 
 ## File structure (in repo root = Honda/)
 - `index.html` — the whole site (embedded CSS + JS). Loads `data.js`.
@@ -43,10 +77,15 @@ Unmapped parts fall back to `tools`.
 - `raw/*.json` — raw Airtable dumps (backup).
 - `assets/{gb3_gp3,gb5_gb7,locations}/` — downloaded images/videos (so the site
   never depends on Airtable's expiring signed URLs).
+- `assets/brand/hero.jpg` — the header banner illustration. Hand-added, not from Airtable.
+- `assets/maint/` — hand-added maintenance photos. `download_assets.py` never touches
+  `brand/` or `maint/`, so a re-sync cannot wipe them.
 - `fetch_airtable.py` — pulls records from the 3 bases into `raw/`.
 - `download_assets.py` — downloads attachments locally into `assets/`.
 - `build_data.py` — builds `site_data.json` with categories + local image paths.
-  Contains `MANUAL_LOC_IMAGES` override (club logo used as 車會會址 photo).
+  Contains `MANUAL_LOC_IMAGES` override (club logo used as 車會會址 photo),
+  `LOCATION_CATEGORIES` (推薦地點 pill order + icons), and skips blank Airtable rows (no `Name`).
+  Prints a per-category location count so a bad 類型 value is visible in the build output.
 - `make_favicon.js` — generates favicons from the club logo (uses `sharp`).
 - `.env` — Airtable token (gitignored, must be recreated on each machine).
 
@@ -266,14 +305,32 @@ Two details that matter if you touch this:
     (GitHub Pages is case-sensitive and served over HTTP).
   - 車會會址 is pinned to the top of 推薦地點 by a stable sort in `build_data.py`
     (`CLUB_LOCATION_ID` / `CLUB_LOCATION_NAME`).
-- Features: model switch, category filters, search, image lightbox, YouTube教學 buttons,
-  per-location map buttons (Google/高德/Waze), route-demo video button (林叔), club-logo favicon.
+- Features: model switch, search, image lightbox, YouTube教學 buttons, per-location map buttons
+  (Google/高德/Waze), route-demo video button (林叔), club-logo favicon, and **two independent
+  sets of category filter pills**:
+  - DIY 教學 — `#catChips` / `state.cat` / `renderCats()`, from `D.categories`.
+  - 推薦地點 — `#locChips` / `state.locCat` / `renderLocCats()`, from `D.location_categories`.
+  Both share the same `.chip` / `.chip.on` / `.n` CSS, and both combine with their search box
+  (pill AND search, not OR). Copy `renderCats()` if a third one is ever needed.
+- Header is the club **banner illustration** (`assets/brand/hero.jpg`), shown at its natural
+  1.84 aspect with no crop, because the artwork already contains the「FREED SPIKE 交流區」
+  wordmark. Consequences worth remembering:
+  - The old `F` tile + text `<h1>` were removed to avoid duplicating that wordmark. The `<h1>`
+    is still in the DOM as `.sr-only` for screen readers and SEO, and the `<img>` is decorative
+    (`alt=""`) so the title is not announced twice.
+  - Using the artwork as a CSS `background` behind the heading text was tried and abandoned:
+    at a ~92px tall header, `cover` shows only ~17% of the image height, which destroys the
+    composition and leaks the artwork's own「SPIKE」lettering behind the `<h1>`.
+  - `min-width:560px` switches the banner from full-width to a fixed 240px height. Without that
+    cap, a desktop banner is 521px tall and fills the entire first screen.
 
 ## Possible next steps / ideas (not yet done)
 - Bundle the re-sync pipeline into a single `sync.ps1`.
 - If 保養參考資訊 starts changing often, move it out of `index.html` into a 4th Airtable base so
   it can be synced instead of hand-edited.
-- Swap the header "F" placeholder box for the real club logo image.
 - Generate a QR code linking to the live site.
+- 類型 is a single select, so multi-service shops sit in one pill only. If that starts to annoy,
+  switch the Airtable field to multiple select and change the filter to `l.category.includes(...)`
+  (store an array instead of a string in `build_data.py`).
 - Consider shrinking the route-demo mp4 (8.44MB): now that the images are compressed it is
   bigger than all 74 of them put together.
