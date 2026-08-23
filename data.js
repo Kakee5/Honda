@@ -735,6 +735,7 @@ window.SITE_DATA = {
     {
       "id": "recQepS3t6IzlBgQ4",
       "name": "車會會址",
+      "category": "車會",
       "phone": "62926233",
       "address": "九龍觀塘萬年工業大廈6樓C13室",
       "gmap": "https://maps.app.goo.gl/dbEqGNgu72822zbB8",
@@ -748,6 +749,7 @@ window.SITE_DATA = {
     {
       "id": "rec5iFzQKbsUobpUD",
       "name": "Alignment Formula (四輪定位，避震，底盤 etc.)",
+      "category": "四輪定位／底盤避震",
       "phone": "9609 9347",
       "address": "元朗公庵路",
       "gmap": "https://maps.app.goo.gl/ys3aRNUt52XNUUKm7",
@@ -761,6 +763,7 @@ window.SITE_DATA = {
     {
       "id": "rec73lnCVF5tqOjx9",
       "name": "福如汽車電池藍電紫電專門店（整冷氣）",
+      "category": "電池",
       "phone": "2365 0596",
       "address": "高山道山西街利榮大廈3號地下12號舖",
       "gmap": "https://maps.app.goo.gl/hqyc3V4t9Nn11Aww6",
@@ -774,6 +777,7 @@ window.SITE_DATA = {
     {
       "id": "recFbfQLViKsP87Jn",
       "name": "陶騰四輪定位（元朗) Whatsapp 預約",
+      "category": "四輪定位／底盤避震",
       "phone": "90269602",
       "address": "元朗宏業西街20號雄偉工業大廈地下E舖 (喜業街)",
       "gmap": "https://maps.app.goo.gl/yYDWcsTWkp79w83q7",
@@ -787,6 +791,7 @@ window.SITE_DATA = {
     {
       "id": "recFymEGTFkgnNPm3",
       "name": "陶騰四輪定位（荔枝角店）Whatsapp 預約",
+      "category": "四輪定位／底盤避震",
       "phone": "68978920",
       "address": "荔枝角長順街20號時豐中心地下2號舖",
       "gmap": "https://maps.app.goo.gl/NxKzEDb9RciqBJtg7",
@@ -800,6 +805,7 @@ window.SITE_DATA = {
     {
       "id": "recMnQoO7siH90LXa",
       "name": "鈴博士Dr Wheel",
+      "category": "呔鈴／膠輪",
       "phone": "6493 8983",
       "address": "深水埗白楊街31號A翠景樓",
       "gmap": "https://maps.app.goo.gl/NBn7XcgNcT6BqMEv8",
@@ -813,6 +819,7 @@ window.SITE_DATA = {
     {
       "id": "recPtoeKM1WifEygu",
       "name": "元朗中華膠輪公司",
+      "category": "呔鈴／膠輪",
       "phone": "2479 5796",
       "address": "元朗安康路6號",
       "gmap": "https://maps.app.goo.gl/RVuRxrwaKoV5TcGw9",
@@ -826,6 +833,7 @@ window.SITE_DATA = {
     {
       "id": "recQAsEdzgOa0FSil",
       "name": "鴨脷洲大街明哥(基信汽車服務)",
+      "category": "車房／綜合維修",
       "phone": "90153261",
       "address": "鴨脷洲鴨脷洲大街18號東寶閣地下7號鋪",
       "gmap": "https://maps.app.goo.gl/rZRj1Adh8rHcuqyq8",
@@ -839,6 +847,7 @@ window.SITE_DATA = {
     {
       "id": "recQWpGgJ9KQO3mxd",
       "name": "環球膠輪有限公司",
+      "category": "呔鈴／膠輪",
       "phone": "9088 8045",
       "address": "荔枝角永康街37號B舖",
       "gmap": "https://maps.app.goo.gl/mi7dTkvQzV89jc1u8",
@@ -852,6 +861,7 @@ window.SITE_DATA = {
     {
       "id": "recWQXApvuDSSXLvc",
       "name": "觀塘車房榮哥 (PIT SHOP)",
+      "category": "車房／綜合維修",
       "phone": "94927927",
       "address": "九龍觀塘興業街16-18號美興工業大廈地下A2",
       "gmap": "https://maps.app.goo.gl/pBJLhxutwz9w34DX9",
@@ -865,6 +875,7 @@ window.SITE_DATA = {
     {
       "id": "recYb3ScfGZg20SC5",
       "name": "噴油平哥",
+      "category": "噴油／車身",
       "phone": "91016539",
       "address": "元朗加州花園入口見到地產鋪左轉小路落",
       "gmap": "https://maps.app.goo.gl/b87gjDnEgBZa8uwN9",
@@ -878,6 +889,7 @@ window.SITE_DATA = {
     {
       "id": "recemxWaLhbJ2byj6",
       "name": "鋰電池自取點 (菜鳥自提點) 星期一至六 1500-2000",
+      "category": "電池",
       "phone": "65854844",
       "address": "新界粉嶺坪輋坪原路18號",
       "gmap": "https://maps.app.goo.gl/eQm4h5BecavX29aS7",
@@ -891,6 +903,7 @@ window.SITE_DATA = {
     {
       "id": "recljAhSZNqoOxYB2",
       "name": "九龍灣車房東哥 (GS MOTOR SERVICE)",
+      "category": "車房／綜合維修",
       "phone": "61066639",
       "address": "九龍九龍灣大業街21號",
       "gmap": "https://maps.app.goo.gl/Av5ufURG3U8ufaDW7",
@@ -904,6 +917,7 @@ window.SITE_DATA = {
     {
       "id": "recywhOEf9rbVh0s4",
       "name": "大埔洞梓車房林叔",
+      "category": "車房／綜合維修",
       "phone": "93136289",
       "address": "大埔汀角洞梓山路分叉路行左邊",
       "gmap": "https://maps.app.goo.gl/x51QuEYFS67HZNiB9",
@@ -919,6 +933,7 @@ window.SITE_DATA = {
     {
       "id": "reczseiQENZr5dDbP",
       "name": "️YW耀華呔鈴專門店",
+      "category": "呔鈴／膠輪",
       "phone": "9799 6757",
       "address": "九龍灣啟祥道9號信和工商中心地下1號C舖 入口在啟成街",
       "gmap": "https://maps.app.goo.gl/TnXZQf6QApb66r22A",
@@ -928,6 +943,38 @@ window.SITE_DATA = {
         "assets/locations/reczseiQENZr5dDbP_0.jpg"
       ],
       "videos": []
+    }
+  ],
+  "location_categories": [
+    {
+      "id": "車房／綜合維修",
+      "name": "車房／綜合維修",
+      "icon": "🔧"
+    },
+    {
+      "id": "呔鈴／膠輪",
+      "name": "呔鈴／膠輪",
+      "icon": "🛞"
+    },
+    {
+      "id": "四輪定位／底盤避震",
+      "name": "四輪定位／底盤避震",
+      "icon": "📐"
+    },
+    {
+      "id": "電池",
+      "name": "電池",
+      "icon": "🔋"
+    },
+    {
+      "id": "噴油／車身",
+      "name": "噴油／車身",
+      "icon": "🎨"
+    },
+    {
+      "id": "車會",
+      "name": "車會",
+      "icon": "🏠"
     }
   ]
 };

@@ -84,6 +84,20 @@ MANUAL_LOC_IMAGES = {
 CLUB_LOCATION_ID = "recQepS3t6IzlBgQ4"
 CLUB_LOCATION_NAME = "車會會址"
 
+# 推薦地點 filter pills. The category itself comes from the Airtable 類型 field; this
+# list only fixes the display order and picks an icon. A value that is not listed here
+# still works - it just lands in 其他 - so adding a new option in Airtable never breaks
+# the site, it only means the pill has no icon until it is added below.
+LOCATION_CATEGORIES = [
+    ("車房／綜合維修",     "\U0001F527"),  # wrench
+    ("呔鈴／膠輪",         "\U0001F6DE"),  # wheel
+    ("四輪定位／底盤避震", "\U0001F4D0"),  # triangular ruler
+    ("電池",               "\U0001F50B"),  # battery
+    ("噴油／車身",         "\U0001F3A8"),  # palette
+    ("車會",               "\U0001F3E0"),  # house
+]
+OTHER_LOCATION_CATEGORY = "其他"
+
 def build_locations():
     records = json.load(open(RAW / "locations.json"))
     items = []
@@ -102,9 +116,13 @@ def build_locations():
         for p in MANUAL_LOC_IMAGES.get(r["id"], []):
             if (BASE / p).exists() and p not in images:
                 images.insert(0, p)
+        # Airtable values arrive with stray spaces (e.g. " 電池"), which would show up
+        # as a second, separate pill. Strip before using it as a category key.
+        category = (f.get("類型") or "").strip()
         items.append({
             "id": r["id"],
             "name": (f.get("Name") or "").strip(),
+            "category": category or OTHER_LOCATION_CATEGORY,
             "phone": (f.get("電話") or "").strip(),
             "address": (f.get("地址") or "").strip(),
             "gmap": (f.get("Google Map") or "").strip(),
@@ -120,13 +138,38 @@ def build_locations():
         print("Skipped blank location rows (no Name):", ", ".join(skipped))
     return items
 
+
+def location_categories(items):
+    """Filter pills for 推薦地點, in LOCATION_CATEGORIES order, skipping unused ones.
+    Any 類型 value not in LOCATION_CATEGORIES is grouped under 其他, appended last."""
+    used = {it["category"] for it in items}
+    known = [name for name, _ in LOCATION_CATEGORIES]
+    cats = [{"id": name, "name": name, "icon": icon}
+            for name, icon in LOCATION_CATEGORIES if name in used]
+    unknown = sorted(u for u in used if u not in known)
+    if unknown:
+        # keep them visible rather than silently hiding the locations
+        for it in items:
+            if it["category"] in unknown:
+                it["category"] = OTHER_LOCATION_CATEGORY
+        cats.append({"id": OTHER_LOCATION_CATEGORY,
+                     "name": OTHER_LOCATION_CATEGORY, "icon": "\U0001F4CD"})
+        print("類型 values not in LOCATION_CATEGORIES (grouped into 其他):",
+              ", ".join(repr(u) for u in unknown))
+    return cats
+
+locations = build_locations()
+# must run before the dump: it rewrites unrecognised 類型 values to 其他
+loc_cats = location_categories(locations)
+
 data = {
     "categories": CATEGORIES,
     "models": [
         {"id": "gb3_gp3", "name": "Freed GB3 / GP3", "years": "1代 (2008-2016)", "items": build_diy("gb3_gp3")},
         {"id": "gb5_gb7", "name": "Freed GB5 / GB7", "years": "2代 (2016-)", "items": build_diy("gb5_gb7")},
     ],
-    "locations": build_locations(),
+    "locations": locations,
+    "location_categories": loc_cats,
 }
 
 out = BASE / "site_data.json"
@@ -142,5 +185,8 @@ print("Wrote", out.name)
 print("GB3/GP3 items:", len(data["models"][0]["items"]))
 print("GB5/GB7 items:", len(data["models"][1]["items"]))
 print("Locations:", len(data["locations"]))
+for c in loc_cats:
+    n = sum(1 for l in locations if l["category"] == c["id"])
+    print(f"  {c['icon']} {c['name']}: {n}")
 if uncat:
     print("Parts falling back to 工具‧其他 (not explicitly mapped):", uncat)

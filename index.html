@@ -203,6 +203,7 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
         <input id="ql" type="search" placeholder="搜尋車房 / 地點 / 地址…">
       </div>
+      <div class="chips" id="locChips"></div>
     </div>
     <div class="count" id="locCount"></div>
     <div class="loc-grid" id="locGrid"></div>
@@ -219,7 +220,7 @@
 <script>
 const D = window.SITE_DATA;
 const catMap = Object.fromEntries(D.categories.map(c=>[c.id,c]));
-const state = {model:D.models[0].id, cat:'all', q:'', ql:'', maintModel:D.models[0].id};
+const state = {model:D.models[0].id, cat:'all', q:'', ql:'', locCat:'all', maintModel:D.models[0].id};
 
 /* ---------- 保養參考資訊（靜態內容，直接在此編輯） ----------
    每個型號係一個 block 陣列。block 支援兩種：
@@ -369,10 +370,22 @@ function renderDiy(){
 }
 
 /* ---------- Locations ---------- */
+function renderLocCats(){
+  const counts={};D.locations.forEach(l=>counts[l.category]=(counts[l.category]||0)+1);
+  const chips=document.getElementById('locChips');chips.innerHTML='';
+  const all=el('div','chip'+(state.locCat==='all'?' on':''),`全部 <span class="n">${D.locations.length}</span>`);
+  all.onclick=()=>{state.locCat='all';renderLocCats();renderLoc();};chips.appendChild(all);
+  (D.location_categories||[]).forEach(c=>{
+    if(!counts[c.id])return;
+    const ch=el('div','chip'+(state.locCat===c.id?' on':''),`${c.icon} ${c.name} <span class="n">${counts[c.id]}</span>`);
+    ch.onclick=()=>{state.locCat=c.id;renderLocCats();renderLoc();};chips.appendChild(ch);
+  });
+}
 function renderLoc(){
   const grid=document.getElementById('locGrid');grid.innerHTML='';
   const q=state.ql.trim().toLowerCase();
   let items=D.locations.filter(l=>{
+    if(state.locCat!=='all'&&l.category!==state.locCat)return false;
     if(!q)return true;return (l.name+' '+l.address).toLowerCase().includes(q);
   });
   document.getElementById('locCount').textContent=`共 ${items.length} 個地點`;
@@ -474,7 +487,7 @@ document.getElementById('q').addEventListener('input',e=>{state.q=e.target.value
 document.getElementById('ql').addEventListener('input',e=>{state.ql=e.target.value;renderLoc();});
 
 /* ---------- init ---------- */
-renderCats();renderDiy();renderLoc();renderMaint();
+renderCats();renderDiy();renderLocCats();renderLoc();renderMaint();
 </script>
 </body>
 </html>
