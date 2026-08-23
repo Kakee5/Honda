@@ -798,6 +798,32 @@ window.SITE_DATA = {
       "videos": []
     },
     {
+      "id": "recMnQoO7siH90LXa",
+      "name": "鈴博士Dr Wheel",
+      "phone": "6493 8983",
+      "address": "深水埗白楊街31號A翠景樓",
+      "gmap": "https://maps.app.goo.gl/NBn7XcgNcT6BqMEv8",
+      "amap": "https://surl.amap.com/cU1YaAC1z4QY",
+      "waze": "https://ul.waze.com/ul?place=ChIJ1eAwdsoABDQReEzk5WvzIBE&ll=22.32789740%2C114.16777910&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
+      "images": [
+        "assets/locations/recMnQoO7siH90LXa_0.png"
+      ],
+      "videos": []
+    },
+    {
+      "id": "recPtoeKM1WifEygu",
+      "name": "元朗中華膠輪公司",
+      "phone": "2479 5796",
+      "address": "元朗安康路6號",
+      "gmap": "https://maps.app.goo.gl/RVuRxrwaKoV5TcGw9",
+      "amap": "https://surl.amap.com/cQEaSYCH0Tp",
+      "waze": "https://ul.waze.com/ul?place=ChIJV73NaXX6AzQRqHBMQ9OsbBg&ll=22.44272640%2C114.02364340&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
+      "images": [
+        "assets/locations/recPtoeKM1WifEygu_0.png"
+      ],
+      "videos": []
+    },
+    {
       "id": "recQAsEdzgOa0FSil",
       "name": "鴨脷洲大街明哥(基信汽車服務)",
       "phone": "90153261",
@@ -807,6 +833,19 @@ window.SITE_DATA = {
       "waze": "https://ul.waze.com/ul?ll=22.24471480%2C114.15713310&navigate=yes&zoom=17&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
       "images": [
         "assets/locations/recQAsEdzgOa0FSil_0.png"
+      ],
+      "videos": []
+    },
+    {
+      "id": "recQWpGgJ9KQO3mxd",
+      "name": "環球膠輪有限公司",
+      "phone": "9088 8045",
+      "address": "荔枝角永康街37號B舖",
+      "gmap": "https://maps.app.goo.gl/mi7dTkvQzV89jc1u8",
+      "amap": "https://surl.amap.com/d0pys8S19ehh",
+      "waze": "https://ul.waze.com/ul?place=ChIJeV-ZtFUHBDQRwFW_8Cr5XFM&ll=22.33880230%2C114.14684300&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
+      "images": [
+        "assets/locations/recQWpGgJ9KQO3mxd_0.png"
       ],
       "videos": []
     },

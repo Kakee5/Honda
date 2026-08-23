@@ -87,8 +87,15 @@ CLUB_LOCATION_NAME = "車會會址"
 def build_locations():
     records = json.load(open(RAW / "locations.json"))
     items = []
+    skipped = []
     for r in records:
         f = r["fields"]
+        # Blank rows in Airtable (a row added but not yet filled in) would otherwise
+        # render as an empty card on the site. A location with no name is useless,
+        # so drop it and report it instead.
+        if not (f.get("Name") or "").strip():
+            skipped.append(r["id"])
+            continue
         imgs = local_images("locations", r["id"])
         images = [i["path"] for i in imgs if not i["video"]]
         # apply manual overrides (only include if the file actually exists)
@@ -109,6 +116,8 @@ def build_locations():
     # list.sort is stable, so this only lifts the club address and leaves the rest as-is
     items.sort(key=lambda x: 0 if (x["id"] == CLUB_LOCATION_ID
                                    or x["name"] == CLUB_LOCATION_NAME) else 1)
+    if skipped:
+        print("Skipped blank location rows (no Name):", ", ".join(skipped))
     return items
 
 data = {
