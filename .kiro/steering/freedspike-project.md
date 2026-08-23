@@ -59,7 +59,7 @@ $env:PYTHONUTF8 = "1"                 # mandatory, see quirk 1 below
 $git = "$env:ProgramFiles\Git\cmd\git.exe"   # git is not on PATH, see quirk 2
 
 python fetch_airtable.py              # 1. pull latest from Airtable
-python download_assets.py             # 2. download new images/videos
+python download_assets.py             # 2. download new images/videos (auto-compressed)
 python build_data.py                  # 3. rebuild categorized site_data.json
 # 4. regenerate data.js:
 python -c "import pathlib; d=open('site_data.json',encoding='utf-8').read(); pathlib.Path('data.js').write_text('window.SITE_DATA = '+d+';\n', encoding='utf-8')"
@@ -228,8 +228,25 @@ Windows only. Everything needed is already installed and configured:
 - If edits were made on GitHub web, `git pull --rebase origin main` before pushing.
 - Do NOT commit `node_modules`, `.env`, or unrelated large media. See `.gitignore`.
 
+## Images are compressed automatically
+Airtable serves full-resolution originals (a shopfront photo can be 3264x2448 / 10MB), which is
+far more than a mobile-first site needs. `imgopt.py` shrinks the long edge to 1600px and
+re-encodes; `download_assets.py` calls it on every newly downloaded image, so a normal sync needs
+no extra step. `optimize_assets.py` is a one-off/idempotent pass over everything already in
+`assets/` (re-running it reports 0 saved). This took `assets/` images from 56.4MB to 5.7MB.
+
+Two details that matter if you touch this:
+- Photos become JPEG; only images that genuinely use transparency stay PNG. Files that are
+  *already* JPEG keep their exact extension, because a few are referenced by hard-coded paths
+  (the club logo `.JPG` in `MANUAL_LOC_IMAGES`, the `.jpeg` maintenance photo). Only
+  PNG-without-transparency is renamed to `.jpg`, and those are all found by glob in
+  `build_data.py`, so the rename is safe.
+- `download_assets.py` matches its cache on `{rid}_{i}.*`, not the exact extension. Without
+  that, every sync would see the `.png` missing and re-download the full-size original,
+  silently undoing the compression.
+
 ## Current state (as of last sync)
-- GB3/GP3: 32 DIY items · GB5/GB7: 25 DIY items · 推薦地點: 12 locations.
+- GB3/GP3: 32 DIY items · GB5/GB7: 25 DIY items · 推薦地點: 15 locations.
 - Three tabs, in order: **保養參考資訊** (landing page) · DIY 教學 · 推薦地點.
 - 保養參考資訊 is **static content** hard-coded in the `MAINT` const inside `index.html`
   (not from Airtable — editing it means editing code and pushing). Split by model:
@@ -253,4 +270,5 @@ Windows only. Everything needed is already installed and configured:
   it can be synced instead of hand-edited.
 - Swap the header "F" placeholder box for the real club logo image.
 - Generate a QR code linking to the live site.
-- Optional: reduce image sizes (assets ~50MB) if repo size becomes a concern.
+- Consider shrinking the one remaining large file: the route-demo mp4 (~10MB) is now
+  the biggest asset by far, bigger than all the images put together.

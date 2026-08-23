@@ -2,6 +2,7 @@
 """Download all Airtable attachments locally so the prototype does not rely on
 expiring signed URLs. Uses curl (macOS python has SSL cert issues)."""
 import json, pathlib, subprocess
+from imgopt import optimize_image, human
 
 BASE = pathlib.Path(__file__).parent
 RAW = BASE / "raw"
@@ -15,13 +16,20 @@ SOURCES = {
 }
 
 def curl_download(url, dest):
-    if dest.exists() and dest.stat().st_size > 0:
-        return "cached"
     subprocess.run(
         ["curl", "-s", "-L", "-o", str(dest), url],
         check=True,
     )
-    return "downloaded"
+
+def existing_variant(sub, stem):
+    """Return an already-downloaded file for this attachment, whatever its
+    extension. optimize_image() may have turned a .png into a .jpg, so matching
+    on the exact extension would re-download the full-size original every sync.
+    """
+    for p in sorted(sub.glob(stem + ".*")):
+        if p.is_file() and p.stat().st_size > 0 and not p.name.endswith(".opt.tmp"):
+            return p
+    return None
 
 manifest = {}
 for slug, attach_fields in SOURCES.items():
@@ -45,13 +53,26 @@ for slug, attach_fields in SOURCES.items():
                 else:
                     url = att["url"]
                     ext = pathlib.Path(att.get("filename", "file")).suffix or ".bin"
-                fname = f"{rid}_{i}{ext}"
-                dest = sub / fname
-                try:
-                    status = curl_download(url, dest)
-                except subprocess.CalledProcessError:
-                    status = "FAILED"
-                saved.append({"file": f"assets/{slug}/{fname}", "type": atype, "status": status})
+                stem = f"{rid}_{i}"
+                found = existing_variant(sub, stem)
+                if found:
+                    dest, status = found, "cached"
+                else:
+                    dest = sub / f"{stem}{ext}"
+                    try:
+                        curl_download(url, dest)
+                        status = "downloaded"
+                    except subprocess.CalledProcessError:
+                        status = "FAILED"
+                    if status == "downloaded" and atype.startswith("image/"):
+                        result = optimize_image(dest)
+                        if result:
+                            dest, before, after = result
+                            if after < before:
+                                print(f"  optimised {dest.name}:"
+                                      f" {human(before)} -> {human(after)}")
+                saved.append({"file": f"assets/{slug}/{dest.name}",
+                              "type": atype, "status": status})
         manifest[rid] = saved
 
 json.dump(manifest, open(BASE / "assets_manifest.json", "w"), ensure_ascii=False, indent=2)

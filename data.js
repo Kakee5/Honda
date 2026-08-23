@@ -46,7 +46,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/2At5Ercr9Vc",
           "images": [
-            "assets/gb3_gp3/reciI5algWTStY497_0.png"
+            "assets/gb3_gp3/reciI5algWTStY497_0.jpg"
           ]
         },
         {
@@ -58,7 +58,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/yyu1GG_8Wj0",
           "images": [
-            "assets/gb3_gp3/reckZE2y0zKeM9wc0_0.png"
+            "assets/gb3_gp3/reckZE2y0zKeM9wc0_0.jpg"
           ]
         },
         {
@@ -70,7 +70,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/RmQF59wGJoo",
           "images": [
-            "assets/gb3_gp3/recEto7DzFnhg5F8w_0.png"
+            "assets/gb3_gp3/recEto7DzFnhg5F8w_0.jpg"
           ]
         },
         {
@@ -82,7 +82,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/eGauSKAI5X4",
           "images": [
-            "assets/gb3_gp3/recFnvtwGR30v0JXG_0.png"
+            "assets/gb3_gp3/recFnvtwGR30v0JXG_0.jpg"
           ]
         },
         {
@@ -94,7 +94,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/HkasHY3xTqw",
           "images": [
-            "assets/gb3_gp3/recCW8F5RMNEtyKa3_0.png"
+            "assets/gb3_gp3/recCW8F5RMNEtyKa3_0.jpg"
           ]
         },
         {
@@ -106,7 +106,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/p1V0roePmY4",
           "images": [
-            "assets/gb3_gp3/recZXKzXAz5yOAU8D_0.png"
+            "assets/gb3_gp3/recZXKzXAz5yOAU8D_0.jpg"
           ]
         },
         {
@@ -118,7 +118,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/RjS6E7hy7EQ",
           "images": [
-            "assets/gb3_gp3/recA98FGY1GnkLUX1_0.png"
+            "assets/gb3_gp3/recA98FGY1GnkLUX1_0.jpg"
           ]
         },
         {
@@ -140,7 +140,7 @@ window.SITE_DATA = {
           "interval": "20,000km / 1 years",
           "video": "https://youtu.be/ofIav4uo9L8",
           "images": [
-            "assets/gb3_gp3/rec51HtsMACO7GOfC_0.png"
+            "assets/gb3_gp3/rec51HtsMACO7GOfC_0.jpg"
           ]
         },
         {
@@ -152,7 +152,7 @@ window.SITE_DATA = {
           "interval": "Coil & 銥合金火咀:80,000 - 100,000km",
           "video": "https://youtu.be/6umuZPJFdmc",
           "images": [
-            "assets/gb3_gp3/recMDPweSOYn3hj9v_0.png",
+            "assets/gb3_gp3/recMDPweSOYn3hj9v_0.jpg",
             "assets/gb3_gp3/recMDPweSOYn3hj9v_1.jpg"
           ]
         },
@@ -165,7 +165,7 @@ window.SITE_DATA = {
           "interval": "40,000 - 80,000km / 2-4 years",
           "video": "",
           "images": [
-            "assets/gb3_gp3/recrMnnIrO0LIlKKk_0.png"
+            "assets/gb3_gp3/recrMnnIrO0LIlKKk_0.jpg"
           ]
         },
         {
@@ -177,7 +177,7 @@ window.SITE_DATA = {
           "interval": "水電2年",
           "video": "https://youtu.be/2bpU8deNKr8",
           "images": [
-            "assets/gb3_gp3/recocjGBKrLbNCrV6_0.png"
+            "assets/gb3_gp3/recocjGBKrLbNCrV6_0.jpg"
           ]
         },
         {
@@ -189,7 +189,7 @@ window.SITE_DATA = {
           "interval": "30,000km",
           "video": "https://youtu.be/ObB6QRrGRmI",
           "images": [
-            "assets/gb3_gp3/recR6nVnooxSfeN0T_0.png"
+            "assets/gb3_gp3/recR6nVnooxSfeN0T_0.jpg"
           ]
         },
         {
@@ -202,8 +202,8 @@ window.SITE_DATA = {
           "video": "https://youtu.be/43RZm8u_ZAc",
           "images": [
             "assets/gb3_gp3/rec79fGpS86LkYPSQ_0.jpg",
-            "assets/gb3_gp3/rec79fGpS86LkYPSQ_1.png",
-            "assets/gb3_gp3/rec79fGpS86LkYPSQ_2.png"
+            "assets/gb3_gp3/rec79fGpS86LkYPSQ_1.jpg",
+            "assets/gb3_gp3/rec79fGpS86LkYPSQ_2.jpg"
           ]
         },
         {
@@ -215,7 +215,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/H0-uaHgTxeY",
           "images": [
-            "assets/gb3_gp3/recCc1iq1ZJExRDON_0.png"
+            "assets/gb3_gp3/recCc1iq1ZJExRDON_0.jpg"
           ]
         },
         {
@@ -227,7 +227,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/1XAhzXGl76U",
           "images": [
-            "assets/gb3_gp3/recyB2Rdj5PWJQOd1_0.png"
+            "assets/gb3_gp3/recyB2Rdj5PWJQOd1_0.jpg"
           ]
         },
         {
@@ -239,7 +239,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/K33W6ts5Ah4",
           "images": [
-            "assets/gb3_gp3/recVvnO3U677Xl5LG_0.png"
+            "assets/gb3_gp3/recVvnO3U677Xl5LG_0.jpg"
           ]
         },
         {
@@ -251,7 +251,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/DfaKe7JgZMU",
           "images": [
-            "assets/gb3_gp3/recXJcgJ6dC0kmq2O_0.png"
+            "assets/gb3_gp3/recXJcgJ6dC0kmq2O_0.jpg"
           ]
         },
         {
@@ -263,7 +263,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/axr-tncPVaA",
           "images": [
-            "assets/gb3_gp3/recr2X0uqN6OsjYao_0.png"
+            "assets/gb3_gp3/recr2X0uqN6OsjYao_0.jpg"
           ]
         },
         {
@@ -275,7 +275,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/W6yobyc1IiU",
           "images": [
-            "assets/gb3_gp3/recU5Fig7EvXWkuPN_0.png"
+            "assets/gb3_gp3/recU5Fig7EvXWkuPN_0.jpg"
           ]
         },
         {
@@ -287,7 +287,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/CEqHfh1_lx0",
           "images": [
-            "assets/gb3_gp3/recXPV7obQhFBBfR0_0.png"
+            "assets/gb3_gp3/recXPV7obQhFBBfR0_0.jpg"
           ]
         },
         {
@@ -299,7 +299,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/1m4pbo0GU44",
           "images": [
-            "assets/gb3_gp3/rectrqA9R1eoefeHm_0.png"
+            "assets/gb3_gp3/rectrqA9R1eoefeHm_0.jpg"
           ]
         },
         {
@@ -311,7 +311,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/ghcfcyqTSwQ",
           "images": [
-            "assets/gb3_gp3/recnjOBzf8oLuTSJQ_0.png"
+            "assets/gb3_gp3/recnjOBzf8oLuTSJQ_0.jpg"
           ]
         },
         {
@@ -323,7 +323,7 @@ window.SITE_DATA = {
           "interval": "30,000 - 50,000",
           "video": "https://youtu.be/CVWD1GeQ-c4?si=X7XDgVRVfI646X4T",
           "images": [
-            "assets/gb3_gp3/recbjTDkJmRku3qxZ_0.png"
+            "assets/gb3_gp3/recbjTDkJmRku3qxZ_0.jpg"
           ]
         },
         {
@@ -335,7 +335,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/x0dxgiE0eps",
           "images": [
-            "assets/gb3_gp3/rechiMuWCYmCY6qCW_0.png"
+            "assets/gb3_gp3/rechiMuWCYmCY6qCW_0.jpg"
           ]
         },
         {
@@ -347,7 +347,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/TEcmyZ9vMVw",
           "images": [
-            "assets/gb3_gp3/recXGGGlCQ1baS3qr_0.png"
+            "assets/gb3_gp3/recXGGGlCQ1baS3qr_0.jpg"
           ]
         },
         {
@@ -359,7 +359,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/Mca44vXy2_8",
           "images": [
-            "assets/gb3_gp3/recI0FzrXtL0edKIC_0.png"
+            "assets/gb3_gp3/recI0FzrXtL0edKIC_0.jpg"
           ]
         },
         {
@@ -371,7 +371,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/ZkAcJqRXINs",
           "images": [
-            "assets/gb3_gp3/recMkY7sTwgRbXDo9_0.png"
+            "assets/gb3_gp3/recMkY7sTwgRbXDo9_0.jpg"
           ]
         },
         {
@@ -383,7 +383,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/yPcMIvB6JUs",
           "images": [
-            "assets/gb3_gp3/rec6l6ZYy57GaWCzY_0.png"
+            "assets/gb3_gp3/rec6l6ZYy57GaWCzY_0.jpg"
           ]
         },
         {
@@ -395,7 +395,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/qI-DvfwHcUo",
           "images": [
-            "assets/gb3_gp3/rec3CYGZnvpVW2oyM_0.png"
+            "assets/gb3_gp3/rec3CYGZnvpVW2oyM_0.jpg"
           ]
         },
         {
@@ -407,7 +407,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/_Qn1OpPoNsU",
           "images": [
-            "assets/gb3_gp3/recyJJHlf4Olg1BNi_0.png"
+            "assets/gb3_gp3/recyJJHlf4Olg1BNi_0.jpg"
           ]
         },
         {
@@ -419,7 +419,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/5c_dZ84eqNU",
           "images": [
-            "assets/gb3_gp3/recFNnKomO1BkfNZG_0.png"
+            "assets/gb3_gp3/recFNnKomO1BkfNZG_0.jpg"
           ]
         }
       ]
@@ -438,7 +438,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=uVKF1EuFwZY",
           "images": [
-            "assets/gb5_gb7/reckZE2y0zKeM9wc0_0.png"
+            "assets/gb5_gb7/reckZE2y0zKeM9wc0_0.jpg"
           ]
         },
         {
@@ -450,7 +450,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=A3t6oLjFwjk",
           "images": [
-            "assets/gb5_gb7/recEto7DzFnhg5F8w_0.png"
+            "assets/gb5_gb7/recEto7DzFnhg5F8w_0.jpg"
           ]
         },
         {
@@ -462,7 +462,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=iEqDQDKWpa8",
           "images": [
-            "assets/gb5_gb7/recFnvtwGR30v0JXG_0.png"
+            "assets/gb5_gb7/recFnvtwGR30v0JXG_0.jpg"
           ]
         },
         {
@@ -474,7 +474,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=bJ_U1QCY2uY",
           "images": [
-            "assets/gb5_gb7/recZXKzXAz5yOAU8D_0.png"
+            "assets/gb5_gb7/recZXKzXAz5yOAU8D_0.jpg"
           ]
         },
         {
@@ -486,7 +486,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=bJ_U1QCY2uY",
           "images": [
-            "assets/gb5_gb7/recA98FGY1GnkLUX1_0.png"
+            "assets/gb5_gb7/recA98FGY1GnkLUX1_0.jpg"
           ]
         },
         {
@@ -508,7 +508,7 @@ window.SITE_DATA = {
           "interval": "20,000km / 1 years",
           "video": "https://www.youtube.com/watch?v=-2hzYdxrROk",
           "images": [
-            "assets/gb5_gb7/rec51HtsMACO7GOfC_0.png"
+            "assets/gb5_gb7/rec51HtsMACO7GOfC_0.jpg"
           ]
         },
         {
@@ -520,7 +520,7 @@ window.SITE_DATA = {
           "interval": "Coil & 銥合金火咀:80,000 - 100,000km",
           "video": "https://www.youtube.com/watch?v=kIFrtq2gld8",
           "images": [
-            "assets/gb5_gb7/recMDPweSOYn3hj9v_0.png",
+            "assets/gb5_gb7/recMDPweSOYn3hj9v_0.jpg",
             "assets/gb5_gb7/recMDPweSOYn3hj9v_1.jpg"
           ]
         },
@@ -533,7 +533,7 @@ window.SITE_DATA = {
           "interval": "40,000 - 80,000km / 2-4 years",
           "video": "",
           "images": [
-            "assets/gb5_gb7/recrMnnIrO0LIlKKk_0.png"
+            "assets/gb5_gb7/recrMnnIrO0LIlKKk_0.jpg"
           ]
         },
         {
@@ -545,7 +545,7 @@ window.SITE_DATA = {
           "interval": "水電2年",
           "video": "https://www.youtube.com/watch?v=mW65tuj3w6M",
           "images": [
-            "assets/gb5_gb7/recocjGBKrLbNCrV6_0.png"
+            "assets/gb5_gb7/recocjGBKrLbNCrV6_0.jpg"
           ]
         },
         {
@@ -557,7 +557,7 @@ window.SITE_DATA = {
           "interval": "30,000km",
           "video": "https://www.youtube.com/watch?v=tMoa-pQMJLA",
           "images": [
-            "assets/gb5_gb7/recR6nVnooxSfeN0T_0.png"
+            "assets/gb5_gb7/recR6nVnooxSfeN0T_0.jpg"
           ]
         },
         {
@@ -581,7 +581,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=RvmgFpp0m14",
           "images": [
-            "assets/gb5_gb7/recCc1iq1ZJExRDON_0.png"
+            "assets/gb5_gb7/recCc1iq1ZJExRDON_0.jpg"
           ]
         },
         {
@@ -593,7 +593,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=Z8dAUbmXwjY",
           "images": [
-            "assets/gb5_gb7/recVvnO3U677Xl5LG_0.png"
+            "assets/gb5_gb7/recVvnO3U677Xl5LG_0.jpg"
           ]
         },
         {
@@ -605,7 +605,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=u2SNicWZQ_0",
           "images": [
-            "assets/gb5_gb7/recXJcgJ6dC0kmq2O_0.png"
+            "assets/gb5_gb7/recXJcgJ6dC0kmq2O_0.jpg"
           ]
         },
         {
@@ -617,7 +617,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=Z0L5NWSEV7Q",
           "images": [
-            "assets/gb5_gb7/recr2X0uqN6OsjYao_0.png"
+            "assets/gb5_gb7/recr2X0uqN6OsjYao_0.jpg"
           ]
         },
         {
@@ -629,7 +629,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=p5DymbS1Q14",
           "images": [
-            "assets/gb5_gb7/recGDRxGgugAygCdI_0.png"
+            "assets/gb5_gb7/recGDRxGgugAygCdI_0.jpg"
           ]
         },
         {
@@ -641,7 +641,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=f0BITkCnSNk",
           "images": [
-            "assets/gb5_gb7/recU5Fig7EvXWkuPN_0.png"
+            "assets/gb5_gb7/recU5Fig7EvXWkuPN_0.jpg"
           ]
         },
         {
@@ -653,7 +653,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=7QK5JynEpU4",
           "images": [
-            "assets/gb5_gb7/recXPV7obQhFBBfR0_0.png"
+            "assets/gb5_gb7/recXPV7obQhFBBfR0_0.jpg"
           ]
         },
         {
@@ -665,7 +665,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=ICOCQGmvyz4",
           "images": [
-            "assets/gb5_gb7/recnjOBzf8oLuTSJQ_0.png"
+            "assets/gb5_gb7/recnjOBzf8oLuTSJQ_0.jpg"
           ]
         },
         {
@@ -677,7 +677,7 @@ window.SITE_DATA = {
           "interval": "30,000 - 50,000",
           "video": "https://www.youtube.com/watch?v=7V-ikmvWDQw",
           "images": [
-            "assets/gb5_gb7/recbjTDkJmRku3qxZ_0.png"
+            "assets/gb5_gb7/recbjTDkJmRku3qxZ_0.jpg"
           ]
         },
         {
@@ -689,7 +689,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://youtu.be/x0dxgiE0eps",
           "images": [
-            "assets/gb5_gb7/rechiMuWCYmCY6qCW_0.png"
+            "assets/gb5_gb7/rechiMuWCYmCY6qCW_0.jpg"
           ]
         },
         {
@@ -701,7 +701,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=8zbd_dfu12o",
           "images": [
-            "assets/gb5_gb7/recXGGGlCQ1baS3qr_0.png"
+            "assets/gb5_gb7/recXGGGlCQ1baS3qr_0.jpg"
           ]
         },
         {
@@ -713,7 +713,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=H7TPs1zRh4s",
           "images": [
-            "assets/gb5_gb7/recM2LnLGrAEgYgi4_0.png"
+            "assets/gb5_gb7/recM2LnLGrAEgYgi4_0.jpg"
           ]
         },
         {
@@ -725,7 +725,7 @@ window.SITE_DATA = {
           "interval": "",
           "video": "https://www.youtube.com/watch?v=5B_ZdDBfxPQ",
           "images": [
-            "assets/gb5_gb7/recI0FzrXtL0edKIC_0.png"
+            "assets/gb5_gb7/recI0FzrXtL0edKIC_0.jpg"
           ]
         }
       ]
@@ -754,7 +754,7 @@ window.SITE_DATA = {
       "amap": "https://surl.amap.com/lsvF4qVdKE",
       "waze": "https://ul.waze.com/ul?place=ChIJ540o2oX6AzQR1jxdq8pJQmQ&ll=22.43367220%2C114.02335340&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
       "images": [
-        "assets/locations/rec5iFzQKbsUobpUD_0.png"
+        "assets/locations/rec5iFzQKbsUobpUD_0.jpg"
       ],
       "videos": []
     },
@@ -767,7 +767,7 @@ window.SITE_DATA = {
       "amap": "https://surl.amap.com/aOqYai1i65M",
       "waze": "https://ul.waze.com/ul?place=ChIJBxPJadkABDQRh6tOQOp8ZZs&ll=22.31334440%2C114.18649490&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
       "images": [
-        "assets/locations/rec73lnCVF5tqOjx9_0.png"
+        "assets/locations/rec73lnCVF5tqOjx9_0.jpg"
       ],
       "videos": []
     },
@@ -780,7 +780,7 @@ window.SITE_DATA = {
       "amap": "https://surl.amap.com/jd7n0Gv8Q7",
       "waze": "https://ul.waze.com/ul?place=ChIJR0Xmk7X7AzQRCKMF_PxalW4&ll=22.44962160%2C114.02793390&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
       "images": [
-        "assets/locations/recFbfQLViKsP87Jn_0.png"
+        "assets/locations/recFbfQLViKsP87Jn_0.jpg"
       ],
       "videos": []
     },
@@ -793,7 +793,7 @@ window.SITE_DATA = {
       "amap": "https://surl.amap.com/k0nZ4aF9mw",
       "waze": "https://ul.waze.com/ul?place=ChIJWbCSJ0UHBDQRIiFIqm_nXmc&ll=22.33637420%2C114.14658290&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
       "images": [
-        "assets/locations/recFymEGTFkgnNPm3_0.png"
+        "assets/locations/recFymEGTFkgnNPm3_0.jpg"
       ],
       "videos": []
     },
@@ -806,7 +806,7 @@ window.SITE_DATA = {
       "amap": "https://surl.amap.com/cU1YaAC1z4QY",
       "waze": "https://ul.waze.com/ul?place=ChIJ1eAwdsoABDQReEzk5WvzIBE&ll=22.32789740%2C114.16777910&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
       "images": [
-        "assets/locations/recMnQoO7siH90LXa_0.png"
+        "assets/locations/recMnQoO7siH90LXa_0.jpg"
       ],
       "videos": []
     },
@@ -819,7 +819,7 @@ window.SITE_DATA = {
       "amap": "https://surl.amap.com/cQEaSYCH0Tp",
       "waze": "https://ul.waze.com/ul?place=ChIJV73NaXX6AzQRqHBMQ9OsbBg&ll=22.44272640%2C114.02364340&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
       "images": [
-        "assets/locations/recPtoeKM1WifEygu_0.png"
+        "assets/locations/recPtoeKM1WifEygu_0.jpg"
       ],
       "videos": []
     },
@@ -832,7 +832,7 @@ window.SITE_DATA = {
       "amap": "https://surl.amap.com/ckkeGPUf7Ge",
       "waze": "https://ul.waze.com/ul?ll=22.24471480%2C114.15713310&navigate=yes&zoom=17&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
       "images": [
-        "assets/locations/recQAsEdzgOa0FSil_0.png"
+        "assets/locations/recQAsEdzgOa0FSil_0.jpg"
       ],
       "videos": []
     },
@@ -845,7 +845,7 @@ window.SITE_DATA = {
       "amap": "https://surl.amap.com/d0pys8S19ehh",
       "waze": "https://ul.waze.com/ul?place=ChIJeV-ZtFUHBDQRwFW_8Cr5XFM&ll=22.33880230%2C114.14684300&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
       "images": [
-        "assets/locations/recQWpGgJ9KQO3mxd_0.png"
+        "assets/locations/recQWpGgJ9KQO3mxd_0.jpg"
       ],
       "videos": []
     },
@@ -858,7 +858,7 @@ window.SITE_DATA = {
       "amap": "https://surl.amap.com/k20YyXM8eTw",
       "waze": "https://www.waze.com/en/live-map/directions/hk/%E4%B9%9D%E9%BE%8D/mai-hing-industrial-building?place=ChIJ86edHEUBBDQRqvwvhSqRzo0",
       "images": [
-        "assets/locations/recWQXApvuDSSXLvc_0.png"
+        "assets/locations/recWQXApvuDSSXLvc_0.jpg"
       ],
       "videos": []
     },
@@ -871,7 +871,7 @@ window.SITE_DATA = {
       "amap": "https://surl.amap.com/k0RYe78L3ZL",
       "waze": "https://ul.waze.com/ul?ll=22.48450527%2C114.05773044&navigate=yes&zoom=17&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
       "images": [
-        "assets/locations/recYb3ScfGZg20SC5_0.png"
+        "assets/locations/recYb3ScfGZg20SC5_0.jpg"
       ],
       "videos": []
     },
@@ -897,7 +897,7 @@ window.SITE_DATA = {
       "amap": "https://surl.amap.com/k1A0uUq1078o",
       "waze": "https://www.waze.com/en/live-map/directions/hk/%E4%B9%9D%E9%BE%8D/%E5%A4%A7%E6%A5%AD%E8%A1%9721%E8%99%9F?place=EhgyMSBUYWkgWWlwIFN0LCBIb25nIEtvbmciMBIuChQKEgm150TRSQEENBEtJNVmOngOYBAVKhQKEgkHKKMbNgEENBEn6SgWK12nfg",
       "images": [
-        "assets/locations/recljAhSZNqoOxYB2_0.png"
+        "assets/locations/recljAhSZNqoOxYB2_0.jpg"
       ],
       "videos": []
     },
@@ -910,7 +910,7 @@ window.SITE_DATA = {
       "amap": "https://surl.amap.com/k1rsYwy1qaRl",
       "waze": "https://ul.waze.com/ul?ll=22.46921817%2C114.19935107&navigate=yes&zoom=17&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
       "images": [
-        "assets/locations/recywhOEf9rbVh0s4_0.png"
+        "assets/locations/recywhOEf9rbVh0s4_0.jpg"
       ],
       "videos": [
         "assets/locations/recywhOEf9rbVh0s4_1.mp4"
@@ -925,7 +925,7 @@ window.SITE_DATA = {
       "amap": "https://surl.amap.com/KZ041k1xahB",
       "waze": "https://ul.waze.com/ul?place=ChIJXaPwpgwHBDQR-ny8WC8MoHg&ll=22.32577170%2C114.20476330&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
       "images": [
-        "assets/locations/reczseiQENZr5dDbP_0.png"
+        "assets/locations/reczseiQENZr5dDbP_0.jpg"
       ],
       "videos": []
     }
