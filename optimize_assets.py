@@ -14,7 +14,13 @@ from imgopt import optimize_image, human, IMAGE_EXTS
 BASE = pathlib.Path(__file__).parent
 ASSETS = BASE / "assets"
 
-total_before = total_after = 0
+def dir_image_bytes():
+    """Total size of every image under assets/ - measured, not accumulated, so the
+    summary can't drift from what is actually on disk."""
+    return sum(p.stat().st_size for p in ASSETS.rglob("*")
+               if p.is_file() and p.suffix.lower() in IMAGE_EXTS)
+
+dir_before = dir_image_bytes()
 changed = renamed = 0
 
 for path in sorted(ASSETS.rglob("*")):
@@ -24,8 +30,6 @@ for path in sorted(ASSETS.rglob("*")):
     if not result:
         continue
     final, before, after = result
-    total_before += before
-    total_after += after
     if after < before:
         changed += 1
         if final.name != path.name:
@@ -34,7 +38,7 @@ for path in sorted(ASSETS.rglob("*")):
         print(f"  {rel}: {human(before)} -> {human(after)}"
               f" ({100 - after * 100 // before}% smaller)")
 
-saved = total_before - total_after
+dir_after = dir_image_bytes()
 print(f"\nOptimised {changed} image(s), {renamed} renamed (png -> jpg)")
-print(f"assets/ images: {human(total_before)} -> {human(total_after)}"
-      f"  (saved {human(saved)})")
+print(f"assets/ images: {human(dir_before)} -> {human(dir_after)}"
+      f"  (saved {human(dir_before - dir_after)})")

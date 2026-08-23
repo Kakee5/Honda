@@ -233,7 +233,12 @@ Airtable serves full-resolution originals (a shopfront photo can be 3264x2448 / 
 far more than a mobile-first site needs. `imgopt.py` shrinks the long edge to 1600px and
 re-encodes; `download_assets.py` calls it on every newly downloaded image, so a normal sync needs
 no extra step. `optimize_assets.py` is a one-off/idempotent pass over everything already in
-`assets/` (re-running it reports 0 saved). This took `assets/` images from 56.4MB to 5.7MB.
+`assets/` (re-running it reports ~0 saved). This took the 74 images under `assets/` from 56.4MB
+to 5.7MB.
+
+Only images are touched, so the two biggest files in `assets/` are now non-images:
+the route-demo `.mp4` (8.44MB) and one Airtable `.pdf` attachment (1.96MB). Bear that in mind
+before quoting a total: `assets/` is ~16MB, of which only ~5.7MB is images.
 
 Two details that matter if you touch this:
 - Photos become JPEG; only images that genuinely use transparency stay PNG. Files that are
@@ -270,5 +275,5 @@ Two details that matter if you touch this:
   it can be synced instead of hand-edited.
 - Swap the header "F" placeholder box for the real club logo image.
 - Generate a QR code linking to the live site.
-- Consider shrinking the one remaining large file: the route-demo mp4 (~10MB) is now
-  the biggest asset by far, bigger than all the images put together.
+- Consider shrinking the route-demo mp4 (8.44MB): now that the images are compressed it is
+  bigger than all 74 of them put together.
