@@ -129,6 +129,11 @@
     border:1px solid var(--line);cursor:zoom-in;background:#eef0f4}
   .maint-fig figcaption{font-size:12.5px;color:var(--ink-soft);text-align:center;
     margin-top:9px;line-height:1.6}
+  /* 表格格內示範影片 */
+  .cell-media{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0;flex:1}
+  .cell-vid{width:auto;max-width:100%;max-height:320px;display:block;border-radius:10px;
+    border:1px solid var(--line);background:#0d0f13}
+  .cell-vid-cap{font-size:12px;color:var(--ink-soft);line-height:1.5}
 
   @media(max-width:640px){
     table.maint thead{display:none}
@@ -233,6 +238,50 @@ const state = {model:D.models[0].id, cat:'all', q:'', ql:'', locCat:'all', maint
      {title:'標題', type:'list', items:['第一點','第二點']}
    要新增內容，照住格式加 block 就得；改完 push 上 GitHub 即生效。
 ------------------------------------------------------------ */
+/* 車匙／鎖芯問題兩代都一樣，所以只定義一次，兩個型號共用同一個 object。
+   renderMaint 只讀唔改，所以共用 reference 係安全嘅。 */
+const KEY_TROUBLE = {
+  title: '車匙扭唔入／扭唔到',
+  note: '最常見係方向盤鎖死，唔係壞車。切記唔好大力扭 —— 匙斷喺鎖芯裡面，或者撞壞鎖芯彈子，維修費會貴好多。',
+  type: 'table',
+  cols: ['可能原因', '點分辨', '處理'],
+  rows: [
+    ['方向盤鎖死（最常見）',
+     '匙插得入但扭唔動。通常熄車前打過方向盤、車輪頂住路邊石壆，或者停斜路',
+     {text:'一隻手左右輕輕搖方向盤，另一隻手同時輕力扭匙。搖到某個位鎖銷鬆開就扭得動',
+      video:'assets/videos/steering-lock.mp4',
+      caption:'示範影片：方向盤鎖死（輕搖方向盤同時輕力扭匙）'}],
+    ['熄匙後留低會放電嘅裝置（例如尿袋）',
+     {text:'關鍵分辨方法：上次鎖車前有異常提示聲。之後匙插得入但完全扭唔動',
+      video:'assets/videos/warning-beep.mp4',
+      caption:'示範影片：鎖車前嘅異常提示聲'},
+     {text:'抆走會放電嘅裝置，再嘗試扭匙',
+      video:'assets/videos/device-drain-fix.mp4',
+      caption:'示範影片：抆走放電裝置後嘅處理'}],
+    ['匙齒磨蝕',
+     '用開嗰條扭唔到，但備用匙扭得到',
+     '去打條新匙就得，唔需要換鎖芯'],
+    ['鎖芯磨損／彈子彈簧疲勞',
+     '兩條匙都要擰下搖下先扭得動，而且越嚟越難扭',
+     '要換鎖芯。高里數車常見'],
+    ['鎖芯有異物或乾涸',
+     '匙插唔到底，或者插入去手感沙沙聲',
+     '吹走／挑走異物，用專用鎖芯潤滑劑。唔好亂噴黏性油，會黏住灰塵越搞越差'],
+    ['匙身彎曲變形',
+     '同備用匙並排對比就見到',
+     '換匙。唔好自己拗返直，容易斷'],
+    ['排檔未完全入 P',
+     '呢個係扭唔返 LOCK／拔唔出匙，唔係扭唔入',
+     '將排檔推實入 P'],
+    ['防盜認唔到匙',
+     '匙扭得到但引擎唔啟動，儀錶板綠色匙仔燈閃',
+     '唔係鎖芯問題，要去車房讀碼／重新配對'],
+    ['Smart key fob 冇電',
+     'Push start 版本按掣冇反應（GB5/GB7 視乎版本有 smart key，亦有普通鎖匙版）',
+     '換 fob 電池。應急啟動方法各版本唔同，請查車主手冊或問車房'],
+  ],
+};
+
 const MAINT = {
   gb3_gp3: [
     {
@@ -264,6 +313,7 @@ const MAINT = {
         ['水溫警告燈亮起', '118 - 120°C 先會著'],
       ],
     },
+    KEY_TROUBLE,
   ],
   gb5_gb7: [
     {
@@ -299,6 +349,7 @@ const MAINT = {
         caption: '上半部：換之前嘅舊油（深褐色）　·　下半部：換之後嘅新油（清透）',
       },
     },
+    KEY_TROUBLE,
   ],
 };
 
@@ -450,6 +501,22 @@ function renderMaint(){
           td.setAttribute('data-label',col);
           const cell=r[i];
           if(cell==null||cell===''){td.innerHTML='<span class="dash">—</span>';}
+          else if(typeof cell==='object'){
+            /* 格內可以帶示範影片：{text:'文字', video:'路徑', caption:'說明'} */
+            const box=el('div','cell-media');
+            if(cell.text)box.appendChild(el('div',null,esc(cell.text)));
+            if(cell.video){
+              const v=document.createElement('video');
+              v.className='cell-vid';v.src=cell.video;
+              v.controls=true;v.playsInline=true;v.muted=false;
+              v.preload='metadata';v.setAttribute('controlsList','nodownload');
+              // 影片載入唔到就唔顯示，避免出現破圖
+              v.onerror=()=>{v.remove();const c=box.querySelector('.cell-vid-cap');if(c)c.remove();};
+              box.appendChild(v);
+              if(cell.caption)box.appendChild(el('div','cell-vid-cap',esc(cell.caption)));
+            }
+            td.appendChild(box);
+          }
           else if(b.pillLast&&i===b.cols.length-1){td.innerHTML=`<span class="interval">${esc(cell)}</span>`;}
           else{td.textContent=cell;}
           tr.appendChild(td);
