@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
 """Build a clean, categorized data file for the prototype website from the raw
 Airtable dumps. Images are mapped to the locally-downloaded copies."""
-import json, pathlib, glob
+import json, pathlib, glob, sys
+
+# On Windows the console defaults to cp950, which can't encode the emoji used in
+# the summary print below. Force UTF-8 so the script finishes cleanly everywhere.
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 
 BASE = pathlib.Path(__file__).parent
 RAW = BASE / "raw"
@@ -48,8 +55,41 @@ def local_images(slug, rid):
         out.append({"path": rel, "video": ext == ".mp4"})
     return out
 
+# Manual DIY items that don't live in Airtable (e.g. member-contributed 教學 write-ups
+# that need richer fields than the Airtable schema provides). Keyed by model slug.
+# These support two extra optional fields the site renders as their own sections:
+#   "steps"     -> 🔌 接線步驟 (ordered list)
+#   "materials" -> 🧰 工具材料 (bulleted list)
+# They are merged in on every build so a fresh Airtable pull never drops them.
+MANUAL_DIY_ITEMS = {
+    "gb3_gp3": [
+        {
+            "id": "manual_hid_angel_gb3",
+            "part": "HID 大燈轉天使燈",
+            "category": "lighting",
+            "spec": "大燈膽 H7 / 高燈膽 H1 / 指揮燈膽 T20（用返自己原裝膽座）",
+            "club_spec": "",
+            "interval": "",
+            "video": "",
+            "images": [],
+            "steps": [
+                "H7 接 HID 火牛線",
+                "H1 接原裝大燈線",
+                "另一條原裝燈影線冇用，包膠布收埋就得",
+            ],
+            "materials": [
+                "大防水膠杯（TB 買）",
+                "電線膠布",
+                "蛇鉗",
+                "10 號卜頭",
+                "拆開半條泵把就得",
+            ],
+        },
+    ],
+}
+
 def build_diy(slug):
-    records = json.load(open(RAW / f"{slug}.json"))
+    records = json.load(open(RAW / f"{slug}.json", encoding="utf-8"))
     items = []
     for r in records:
         f = r["fields"]
@@ -66,6 +106,8 @@ def build_diy(slug):
             "video": (f.get("影片教學") or "").strip(),
             "images": [i["path"] for i in imgs if not i["video"]],
         })
+    # merge in manual, non-Airtable items for this model
+    items.extend(MANUAL_DIY_ITEMS.get(slug, []))
     # sort by category order then part name
     order = {c["id"]: n for n, c in enumerate(CATEGORIES)}
     items.sort(key=lambda x: (order.get(x["category"], 99), x["part"]))
@@ -99,7 +141,7 @@ LOCATION_CATEGORIES = [
 OTHER_LOCATION_CATEGORY = "其他"
 
 def build_locations():
-    records = json.load(open(RAW / "locations.json"))
+    records = json.load(open(RAW / "locations.json", encoding="utf-8"))
     items = []
     skipped = []
     for r in records:
@@ -173,7 +215,7 @@ data = {
 }
 
 out = BASE / "site_data.json"
-json.dump(data, open(out, "w"), ensure_ascii=False, indent=2)
+json.dump(data, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
 # uncategorized check
 uncat = set()

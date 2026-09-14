@@ -88,6 +88,13 @@
     font-size:12px;font-weight:700;padding:4px 9px;border-radius:8px}
   .interval{align-self:flex-start;background:#eefaf1;color:#1c7a44;font-size:12px;font-weight:700;
     padding:4px 9px;border-radius:8px}
+  /* DIY 教學卡片：接線步驟 / 工具材料 */
+  .diy-block{background:#f8f9fb;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .diy-block .h{font-size:12.5px;font-weight:800;color:var(--ink);margin-bottom:6px;
+    display:flex;align-items:center;gap:6px}
+  .diy-block ol,.diy-block ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+  .diy-block li{font-size:13px;color:var(--ink);line-height:1.45}
+  .diy-block ul{list-style:disc}
   .card-foot{margin-top:auto;padding-top:4px}
   .btn-video{display:inline-flex;align-items:center;gap:7px;background:var(--red);color:#fff;
     font-weight:700;font-size:13.5px;padding:9px 14px;border-radius:10px;width:100%;justify-content:center}
@@ -392,7 +399,7 @@ function renderDiy(){
   const q=state.q.trim().toLowerCase();
   let items=currentItems().filter(i=>{
     if(state.cat!=='all'&&i.category!==state.cat)return false;
-    if(q){const blob=(i.part+' '+i.spec+' '+i.club_spec+' '+i.interval).toLowerCase();if(!blob.includes(q))return false;}
+    if(q){const blob=(i.part+' '+i.spec+' '+i.club_spec+' '+i.interval+' '+(i.steps||[]).join(' ')+' '+(i.materials||[]).join(' ')).toLowerCase();if(!blob.includes(q))return false;}
     return true;
   });
   document.getElementById('diyCount').textContent=`共 ${items.length} 個項目`;
@@ -414,6 +421,20 @@ function renderDiy(){
     if(i.club_spec)body.appendChild(el('div','tag-club','★ 車會推薦：'+esc(i.club_spec)));
     if(i.spec)body.appendChild(el('div','row',`<span class="k">型號</span><span class="v">${esc(i.spec)}</span>`));
     if(i.interval)body.appendChild(el('div','interval','🔄 '+esc(i.interval)));
+    if(i.steps&&i.steps.length){
+      const box=el('div','diy-block');
+      box.appendChild(el('div','h','🔌 接線步驟'));
+      const ol=el('ol');
+      i.steps.forEach(s=>ol.appendChild(el('li',null,esc(s))));
+      box.appendChild(ol);body.appendChild(box);
+    }
+    if(i.materials&&i.materials.length){
+      const box=el('div','diy-block');
+      box.appendChild(el('div','h','🧰 工具材料'));
+      const ul=el('ul');
+      i.materials.forEach(s=>ul.appendChild(el('li',null,esc(s))));
+      box.appendChild(ul);body.appendChild(box);
+    }
     const foot=el('div','card-foot');
     if(i.video){
       const a=el('a','btn-video','▶ 睇 YouTube 教學');a.href=i.video;a.target='_blank';a.rel='noopener';foot.appendChild(a);
@@ -560,5 +581,7 @@ document.getElementById('ql').addEventListener('input',e=>{state.ql=e.target.val
 /* ---------- init ---------- */
 renderCats();renderDiy();renderLocCats();renderLoc();renderMaint();
 </script>
+<script src="esm/data.js"></script>
+<script src="esm/preview.js"></script>
 </body>
 </html>

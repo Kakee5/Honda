@@ -38,6 +38,28 @@
       "years": "1代 (2008-2016)",
       "items": [
         {
+          "id": "manual_hid_angel_gb3",
+          "part": "HID 大燈轉天使燈",
+          "category": "lighting",
+          "spec": "大燈膽 H7 / 高燈膽 H1 / 指揮燈膽 T20（用返自己原裝膽座）",
+          "club_spec": "",
+          "interval": "",
+          "video": "",
+          "images": [],
+          "steps": [
+            "H7 接 HID 火牛線",
+            "H1 接原裝大燈線",
+            "另一條原裝燈影線冇用，包膠布收埋就得"
+          ],
+          "materials": [
+            "大防水膠杯（TB 買）",
+            "電線膠布",
+            "蛇鉗",
+            "10 號卜頭",
+            "拆開半條泵把就得"
+          ]
+        },
+        {
           "id": "reciI5algWTStY497",
           "part": "冷氣燈",
           "category": "lighting",
