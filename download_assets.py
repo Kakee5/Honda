@@ -33,7 +33,7 @@ def existing_variant(sub, stem):
 
 manifest = {}
 for slug, attach_fields in SOURCES.items():
-    records = json.load(open(RAW / f"{slug}.json"))
+    records = json.load(open(RAW / f"{slug}.json", encoding="utf-8"))
     sub = ASSETS / slug
     sub.mkdir(exist_ok=True)
     for rec in records:
@@ -75,7 +75,7 @@ for slug, attach_fields in SOURCES.items():
                               "type": atype, "status": status})
         manifest[rid] = saved
 
-json.dump(manifest, open(BASE / "assets_manifest.json", "w"), ensure_ascii=False, indent=2)
+json.dump(manifest, open(BASE / "assets_manifest.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 total = sum(len(v) for v in manifest.values())
 ok = sum(1 for v in manifest.values() for x in v if x["status"] != "FAILED")
 print(f"Attachments processed: {total}, ok: {ok}")

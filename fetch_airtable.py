@@ -36,5 +36,5 @@ def fetch(base, table):
 
 for name, base, table, slug in SOURCES:
     recs = fetch(base, table)
-    (outdir / f"{slug}.json").write_text(json.dumps(recs, ensure_ascii=False, indent=2))
+    (outdir / f"{slug}.json").write_text(json.dumps(recs, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"{name}: {len(recs)} records -> raw/{slug}.json")
